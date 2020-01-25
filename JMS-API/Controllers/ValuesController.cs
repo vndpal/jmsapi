@@ -17,7 +17,7 @@ namespace JMS_API.Controllers
         [Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "val" };
         }
 
         // GET api/values/5
