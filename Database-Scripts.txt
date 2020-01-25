@@ -1,0 +1,22 @@
+sdfsdfsfsf
+create table LOGIN_MST
+(
+loginId int primary key identity(1,1),
+username varchar(50) not null unique,
+password varchar(250) not null,
+email varchar(250),
+mobile varchar(12),
+RoleId int references ROLE_MST(RoleId)
+);
+
+create table ROLE_MST
+(
+	RoleId int primary key identity(1,1),
+	RoleKey varchar(50) Not Null,
+	RoleValue varchar(50) Not null
+);
+
+INSERT INTO ROLE_MST values
+(
+'ADMIN','ADMIN'
+);
