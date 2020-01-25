@@ -1,0 +1,14 @@
+C:\Users\Manoj\Work\JMS-API\JMS-API\bin\Debug\netcoreapp2.2\JMS-API.deps.json
+C:\Users\Manoj\Work\JMS-API\JMS-API\bin\Debug\netcoreapp2.2\JMS-API.runtimeconfig.json
+C:\Users\Manoj\Work\JMS-API\JMS-API\bin\Debug\netcoreapp2.2\JMS-API.runtimeconfig.dev.json
+C:\Users\Manoj\Work\JMS-API\JMS-API\bin\Debug\netcoreapp2.2\JMS-API.dll
+C:\Users\Manoj\Work\JMS-API\JMS-API\bin\Debug\netcoreapp2.2\JMS-API.pdb
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.csprojAssemblyReference.cache
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.csproj.CoreCompileInputs.cache
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.RazorAssemblyInfo.cache
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.RazorAssemblyInfo.cs
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.AssemblyInfoInputs.cache
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.AssemblyInfo.cs
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.RazorTargetAssemblyInfo.cache
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.dll
+C:\Users\Manoj\Work\JMS-API\JMS-API\obj\Debug\netcoreapp2.2\JMS-API.pdb
