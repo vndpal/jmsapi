@@ -1,3 +1,5 @@
+/***/
+
 create table LOGIN_MST
 (
 loginId int primary key identity(1,1),
