@@ -1,4 +1,0 @@
-D:\JMSbyVinod\JMS-API\BAL\obj\Debug\netcoreapp2.2\BLL.csprojAssemblyReference.cache
-D:\JMSbyVinod\JMS-API\BAL\obj\Debug\netcoreapp2.2\BLL.csproj.CoreCompileInputs.cache
-D:\JMSbyVinod\JMS-API\BAL\obj\Debug\netcoreapp2.2\BLL.AssemblyInfoInputs.cache
-D:\JMSbyVinod\JMS-API\BAL\obj\Debug\netcoreapp2.2\BLL.AssemblyInfo.cs
