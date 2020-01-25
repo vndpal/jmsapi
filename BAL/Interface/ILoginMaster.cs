@@ -10,6 +10,5 @@ namespace BLL.Interface
     {
         Task<SingleReturnResult<string>> AuthenticateUser(LoginDto loginDetails);
         //Task<SingleReturnResult<LoginDto>> RegisterUser(LoginDto userDetails);
-        // new asndlkasndlnasld
     }
 }

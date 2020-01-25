@@ -60,21 +60,21 @@ namespace BLL.Repository
             }
         }
 
-        //public async Task<SingleReturnResult<LoginDto>> RegisterUser(LoginDto userDetails)
-        //{
-        //    SingleReturnResult<LoginDto> result = new SingleReturnResult<LoginDto>();
+        public async Task<SingleReturnResult<LoginDto>> RegisterUser(LoginDto userDetails)
+        {
+            SingleReturnResult<LoginDto> result = new SingleReturnResult<LoginDto>();
 
-        //    try
-        //    {
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Flag = ApplicationConstants.failureFlag;
-        //        result.message = "Some error has occured while registering the user, please try again after sometime";
-        //        return result;
-        //    }
-        //}
+            try
+            {
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Flag = ApplicationConstants.failureFlag;
+                result.message = "Some error has occured while registering the user, please try again after sometime";
+                return result;
+            }
+        }
 
         //public async  Task<SingleReturnResult<LoginDto> RegisterLogin(LoginDto login)
         //{

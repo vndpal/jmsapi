@@ -11,5 +11,6 @@ namespace BLL.Interface
        Task<SingleReturnResult<string>> AddUpdateCompany(List<CompanyMasterDto> comp);
        Task<ListReturnResult<CompanyMasterDto>> GetAllCompany();
        Task<SingleReturnResult<CompanyMasterDto>> GetCompany(int Id);
+       Task<SingleReturnResult<CompanyMasterDto>> updateCompany(CompanyMasterDto companyDetails);
     }
 }

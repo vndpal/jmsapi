@@ -25,7 +25,8 @@ namespace Services.Entities
         }
         public string strConnectionString()
         {
-            return "Data Source =(localdb)\\MSSQLLocalDB;initial catalog=JMSDB;persist security info=True;Integrated Security=SSPI;";
+            //return "Data Source =DESKTOP-2OFQSQK\\SQLEXPRESS;initial catalog=JMSDB;User Id=sa;Password=vipl$123;persist security info=True;Integrated Security=SSPI;";
+            return "Data Source =LAPTOP-L7469IMM;initial catalog=JMSDB;persist security info=True;Integrated Security=SSPI;";
         }
         public bool openConnection()
         {

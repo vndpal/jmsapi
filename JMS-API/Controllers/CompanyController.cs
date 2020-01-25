@@ -51,5 +51,15 @@ namespace API.Controllers
             response = Ok(companyDetail);
             return response;
         }
+
+        [HttpPost]
+        [Route("updateDetails")]
+        public async Task<IActionResult> updateDetails([FromBody] CompanyMasterDto companyDetails)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<CompanyMasterDto> companyDetail = await _comp.updateCompany(companyDetails);
+            response = Ok(companyDetail);
+            return response;
+        }
     }
 }

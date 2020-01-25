@@ -27,6 +27,8 @@ namespace JMS_API
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -45,6 +47,16 @@ namespace JMS_API
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://example.com",
+                                        "http://localhost:3000").AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton(Configuration);
             //services.Configure<AppSettingsDto>(Configuration).AddSingleton(sp => sp.GetRequiredService<IOptions<AppSettingsDto>>().Value);
@@ -62,6 +74,7 @@ namespace JMS_API
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseMvc();
         }
     }
