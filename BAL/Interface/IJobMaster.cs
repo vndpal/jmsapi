@@ -8,9 +8,9 @@ namespace BLL.Interface
 {
     public interface IJobMaster
     {
-        Task<SingleReturnResult<string>> AddUpdateJob(List<JobMasterDto> comp);
+        Task<SingleReturnResult<string>> AddUpdateJob(JobMasterDto job);
         Task<ListReturnResult<JobMasterDto>> GetAllJob();
-        Task<SingleReturnResult<JobMasterDto>> GetJob(int JobId);
+        Task<SingleReturnResult<JobMasterDto>> GetJob(int Id);
        // Task<SingleReturnResult<JobMasterDto>> updateJob(JobMasterDto jobDetails);
     }
 }

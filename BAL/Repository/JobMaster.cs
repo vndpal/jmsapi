@@ -29,7 +29,8 @@ namespace BLL.Repository
                 dtJob.Columns.Remove("DiaId");
                 dtJob.Columns.Remove("JobId");
 
-                object stat = _conn.ExecuteProcedure("InsertUpdateJobMaster", new SqlParameter("CompanyId", job.CompanyId),
+                object stat = _conn.ExecuteProcedure("InsertUpdateJobMaster", new SqlParameter("JobId", job.JobId),
+                                                                                    new SqlParameter("CompanyId", job.CompanyId),
                                                                                     new SqlParameter("JobNo", job.JobNo),
                                                                                     new SqlParameter("ClientJobNo", job.ClientJobNo),
                                                                                     new SqlParameter("JobType", job.JobType),

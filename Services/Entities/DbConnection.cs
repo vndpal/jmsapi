@@ -33,7 +33,7 @@ namespace Services.Entities
             try
             {
                 if (conn.State == ConnectionState.Closed || conn.State == ConnectionState.Broken)
-                    conn.OpenAsync();
+                    conn.Open();
                 if (conn.State == ConnectionState.Closed || conn.State == ConnectionState.Broken)
                     return false;
                 else

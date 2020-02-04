@@ -24,7 +24,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("JobRegister")]
-        public async Task<IActionResult> JobRegistration([FromBody]List<JobMasterDto> jobDetails)
+        public async Task<IActionResult> JobRegistration([FromBody]JobMasterDto jobDetails)
         {
             IActionResult response = Unauthorized();
             SingleReturnResult<string> newJobDetails = await _job.AddUpdateJob(jobDetails);
