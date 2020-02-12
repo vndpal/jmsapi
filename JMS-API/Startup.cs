@@ -64,6 +64,7 @@ namespace JMS_API
             services.AddScoped<IDbConnections, DbConnection>();
             services.AddScoped<ICompanyMaster , CompanyMaster>();
             services.AddScoped<IJobMaster, JobMaster>();
+            services.AddScoped<IHRDepartment, HRDepartment>();
             services.AddScoped<ILoginMaster, LoginMaster>();
         }
 
