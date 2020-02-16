@@ -65,6 +65,7 @@ namespace JMS_API
             services.AddScoped<ICompanyMaster , CompanyMaster>();
             services.AddScoped<IJobMaster, JobMaster>();
             services.AddScoped<ILoginMaster, LoginMaster>();
+            services.AddScoped<ICommonMaster, CommonMaster>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
