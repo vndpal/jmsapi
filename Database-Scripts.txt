@@ -20,3 +20,15 @@ INSERT INTO ROLE_MST values
 (
 'ADMIN','ADMIN'
 );
+
+CREATE TABLE CommonMaster
+(
+	Id Int IDENTITY(1,1) PRIMARY KEY,
+	Masterkey varchar(150),
+	MasterValue varchar(150),
+	MasterGroup Varchar(150),
+	HierachyKey int,
+	Status int default 1,
+	CreatedOn DateTime default getDate(),
+	Constraint Unique_key_value_group unique (MasterKey,MasterValue,MasterGroup)
+);
