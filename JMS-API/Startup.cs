@@ -65,6 +65,11 @@ namespace JMS_API
             services.AddScoped<ICompanyMaster , CompanyMaster>();
             services.AddScoped<IJobMaster, JobMaster>();
             services.AddScoped<IHRDepartment, HRDepartment>();
+            services.AddScoped<ICADDepartment, CADDepartment>();
+            services.AddScoped<ICASTDepartment, CASTDepartment>();
+            services.AddScoped<IWAXDepartment, WAXDepartment>();
+            services.AddScoped<IPolishDepartment, PolishDepartment>();
+            services.AddScoped<IFillingDepartment, FillingDepartment>();
             services.AddScoped<ILoginMaster, LoginMaster>();
             services.AddScoped<ICommonMaster, CommonMaster>();
         }
