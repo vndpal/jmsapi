@@ -96,22 +96,18 @@ namespace BLL.Repository
             {
                 DataSet dsJob = _conn.ExecuteProcedureForDataSet("GetJobById",new SqlParameter("JobId",Id));
                 List<JobMasterDto> jobDetail = new List<JobMasterDto>();
+                
                 jobDetail = _conn.ConvertDataTable<JobMasterDto>(dsJob.Tables[0]);
-                jobDetail[0].diamondDetail = new List<DiamondDetailDto>();
-                jobDetail[0].diamondDetail = _conn.ConvertDataTable<DiamondDetailDto>(dsJob.Tables[1]);
-                //string SqlQuery = "SELECT * FROM JobMaster WHERE JobId = @JobId";
-
-                //using (var connection = new SqlConnection(_conn.strConnectionString()))
-                //{
-                //    await connection.OpenAsync();
-                //    job.result = await connection.QueryFirstOrDefaultAsync<JobMasterDto>(SqlQuery, new { JobId = Id  });
-                //}
-                if (job != null)
+                if (dsJob.Tables.Count > 1)
                 {
-                    job.result = jobDetail[0];
+                    jobDetail[0].diamondDetail = new List<DiamondDetailDto>();
+                    jobDetail[0].diamondDetail = _conn.ConvertDataTable<DiamondDetailDto>(dsJob.Tables[1]); 
+                }
+              
+                   job.result = jobDetail[0];
                     job.Flag = ApplicationConstants.successFlag;
                     job.message = "Data Fetched Successfully!"; 
-                }
+                
                 return job;
             }
             catch (Exception ex)
