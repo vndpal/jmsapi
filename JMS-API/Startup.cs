@@ -63,7 +63,15 @@ namespace JMS_API
             services.Configure<AppSettingsDto>(Configuration);
             services.AddScoped<IDbConnections, DbConnection>();
             services.AddScoped<ICompanyMaster , CompanyMaster>();
+            services.AddScoped<IJobMaster, JobMaster>();
+            services.AddScoped<IHRDepartment, HRDepartment>();
+            services.AddScoped<ICADDepartment, CADDepartment>();
+            services.AddScoped<ICASTDepartment, CASTDepartment>();
+            services.AddScoped<IWAXDepartment, WAXDepartment>();
+            services.AddScoped<IPolishDepartment, PolishDepartment>();
+            services.AddScoped<IFillingDepartment, FillingDepartment>();
             services.AddScoped<ILoginMaster, LoginMaster>();
+            services.AddScoped<ICommonMaster, CommonMaster>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

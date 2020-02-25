@@ -119,7 +119,7 @@ namespace BLL.Repository
                     { CompanyId = companyDetails.CompanyId,
                         CompanyName = companyDetails.CompanyName,
                         CompanyCode =companyDetails.CompanyCode,
-                        CompanyType = companyDetails.CompanyCode,
+                        CompanyType = companyDetails.CompanyType,
                         FieldType =companyDetails.FieldType,
                         GSTNo = companyDetails.GSTNo,
                         PANNo= companyDetails.PANNo,
