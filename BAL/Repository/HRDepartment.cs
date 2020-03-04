@@ -82,12 +82,12 @@ namespace BLL.Repository
             ListReturnResult<HRDepartmentDto> hrDept = new ListReturnResult<HRDepartmentDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM Department_HR";
+                string SqlProc = "GetHR";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
-                    hrDept.result = connection.Query<HRDepartmentDto>(SqlQuery).AsList();
+                    hrDept.result = connection.Query<HRDepartmentDto>(SqlProc , commandType: CommandType.StoredProcedure).AsList();
                 }
                 hrDept.Flag = ApplicationConstants.successFlag;
                 hrDept.message = "Data Fetched successfully";
