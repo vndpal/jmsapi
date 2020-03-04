@@ -58,7 +58,7 @@ namespace BLL.Repository
             ListReturnResult<JobMasterDto> hr = new ListReturnResult<JobMasterDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM JobMaster WHERE ProcessStatus == 0";
+                string SqlQuery = "SELECT JobId,JobNo FROM JobMaster WHERE ProcessStatus = 0";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {

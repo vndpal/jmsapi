@@ -100,7 +100,31 @@ namespace BLL.Repository
                 return cad;
             }
         }
-        
+
+        public async Task<ListReturnResult<JobMasterDto>> GetCADAssignedJob()
+        {
+            ListReturnResult<JobMasterDto> cad = new ListReturnResult<JobMasterDto>();
+            try
+            {
+                string SqlQuery = "SELECT JobId,JobNo FROM JobMaster WHERE ProcessStatus = 1";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    cad.result = connection.Query<JobMasterDto>(SqlQuery).AsList();
+                }
+                cad.Flag = ApplicationConstants.successFlag;
+                cad.message = "Data Fetched successfully";
+                return cad;
+            }
+            catch (Exception ex)
+            {
+                cad.Flag = ApplicationConstants.failureFlag;
+                cad.message = ex.ToString();
+                return cad;
+            }
+        }
+
         public async Task<SingleReturnResult<CADDepartmentDto>> UpdateCAD(CADDepartmentDto caddetails)
         {
             SingleReturnResult<CADDepartmentDto> cad = new SingleReturnResult<CADDepartmentDto>();

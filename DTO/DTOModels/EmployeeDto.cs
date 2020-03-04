@@ -7,7 +7,7 @@ namespace DTO.DTOModels
 {
    public class EmployeeDto
     {
-        public DepartmetnType DepartmentType { get; set; }
+        public DepartmentType DepartmentType { get; set; }
 
         public EmployeeType EmployeeType { get; set; }
 

@@ -7,7 +7,7 @@ namespace DTO.Common
     public class Enums
     {
 
-        public enum DepartmetnType
+        public enum DepartmentType
         {
             HR=1,
             CAD=2,

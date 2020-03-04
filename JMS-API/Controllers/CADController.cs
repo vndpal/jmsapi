@@ -48,7 +48,17 @@ namespace API.Controllers
             response = Ok(cadDetail);
             return response;
         }
-            
+
+        [HttpGet]
+        [Route("JobForCAD")]
+        public async Task<IActionResult> JobForCAD()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<JobMasterDto> cadDetails = await _cad.GetCADAssignedJob();
+            response = Ok(cadDetails);
+            return response;
+        }
+
         [HttpPost]
         [Route("updateDetails")]
         public async Task<IActionResult> updateDetails([FromBody] CADDepartmentDto cadDetails)

@@ -11,6 +11,7 @@ namespace BLL.Interface
         Task<SingleReturnResult<string>> AddCAD(List<CADDepartmentDto> cad);
         Task<ListReturnResult<CADDepartmentDto>> GetAllCAD();
         Task<SingleReturnResult<CADDepartmentDto>> GetCAD(int Id);
+        Task<ListReturnResult<JobMasterDto>> GetCADAssignedJob();
         Task<SingleReturnResult<CADDepartmentDto>> UpdateCAD(CADDepartmentDto caddetails);
     }
 }
