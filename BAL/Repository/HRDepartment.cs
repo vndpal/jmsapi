@@ -27,6 +27,9 @@ namespace BLL.Repository
             {
                 //string result = "";
                 DataTable dtHRDept = _conn.ToDataTable(hr);
+                dtHRDept.Columns.Remove("JobNo");
+                dtHRDept.Columns.Remove("Department");
+                dtHRDept.Columns.Remove("Employee");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateHRDepartment", new SqlParameter("HRDepartment", dtHRDept));
                                                                                    

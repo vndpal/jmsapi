@@ -8,9 +8,12 @@ namespace DTO.DTOModels
     {
         public int CADId { get; set; }
         public int JobId { get; set; }
-        public DateTime? IssueDate { get; set; }
+        public string JobNo { get; set; }
+        public int EmployeeId { get; set; }
+        public string Employee { get; set; }
+        public DateTime? IssuedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
-        public int PieceQuantity { get; set; }
+        public int Quantity { get; set; }
         public int ResinType { get; set; }
         public decimal? RPTWeight { get; set; }
         public decimal RPTRate { get; set; }
