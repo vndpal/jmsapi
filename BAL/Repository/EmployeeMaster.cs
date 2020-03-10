@@ -1,4 +1,5 @@
 ﻿using BLL.Interface;
+using Dapper;
 using DTO.DTOModels;
 using Services.Entities;
 using System;
@@ -24,24 +25,24 @@ namespace BLL.Repository
             try
             {
 
-                object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
-                                                                                    new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
-                                                                                    new SqlParameter("FirstName", employeeDto.FirstName),
-                                                                                    new SqlParameter("MiddleName", employeeDto.MiddleName),
-                                                                                   new SqlParameter("LastName", employeeDto.LastName),
-                                                                                   new SqlParameter("EmailId", employeeDto.EmailId),
-                                                                                  new SqlParameter("Address", employeeDto.Address),
-                                                                                  new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
-                                                                                 new SqlParameter("AddressProofId", employeeDto.AddressProofId),
-                                                                                 new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
-                                                                                 new SqlParameter("AddressProof", employeeDto.AddressProof),
-                                                                                 new SqlParameter("IdentityProof", employeeDto.IdentityProof),
-                                                                                 new SqlParameter("Photo", employeeDto.Photo),
-                                                                                 new SqlParameter("MobileNo", employeeDto.MobileNo),
-                                                                                 new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
-                                                                                 new SqlParameter("JoiningDate", employeeDto.JoiningDate),
-                                                                                 new SqlParameter("ReleavingDate", employeeDto.ReleivingDate),
-                                                                                 new SqlParameter("Status", employeeDto.Status));
+            object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
+                                                                                new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
+                                                                                new SqlParameter("FirstName", employeeDto.FirstName),
+                                                                                new SqlParameter("MiddleName", employeeDto.MiddleName),
+                                                                                new SqlParameter("LastName", employeeDto.LastName),
+                                                                                new SqlParameter("EmailId", employeeDto.EmailId),
+                                                                                new SqlParameter("Address", employeeDto.Address),
+                                                                                new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
+                                                                                new SqlParameter("AddressProofId", employeeDto.AddressProofId),
+                                                                                new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
+                                                                                new SqlParameter("AddressProof", employeeDto.AddressProof),
+                                                                                new SqlParameter("IdentityProof", employeeDto.IdentityProof),
+                                                                                new SqlParameter("Photo", employeeDto.Photo),
+                                                                                new SqlParameter("MobileNo", employeeDto.MobileNo),
+                                                                                new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
+                                                                                new SqlParameter("JoiningDate", employeeDto.JoiningDate),
+                                                                                new SqlParameter("ReleavingDate", employeeDto.ReleivingDate),
+                                                                                new SqlParameter("Status", employeeDto.Status));
                 if (stat != null)
                 {
                     result.Flag = ApplicationConstants.successFlag;
@@ -65,9 +66,52 @@ namespace BLL.Repository
             }
         }
 
-        public Task<ListReturnResult<EmployeeDto>> GetAllCompany()
+        public async Task<ListReturnResult<EmployeeDto>> GetAllEmployee()
         {
-            throw new NotImplementedException();
+            ListReturnResult<EmployeeDto> emp = new ListReturnResult<EmployeeDto>();
+            try
+            {
+                string SqlQuery = "SELECT * FROM Employees";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    emp.result = connection.Query<EmployeeDto>(SqlQuery).AsList();
+                }
+                emp.Flag = ApplicationConstants.successFlag;
+                emp.message = "Data Fetched successfully";
+                return emp;
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = ex.ToString();
+                return emp;
+            }
+        }
+
+        public async Task<SingleReturnResult<EmployeeDto>> GetEmployee(int Id)
+        {
+            SingleReturnResult<EmployeeDto> emp = new SingleReturnResult<EmployeeDto>();
+            try
+            {
+                string SqlQuery = "SELECT * FROM Employees WHERE EmpId = @EmpId";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    emp.result = await connection.QueryFirstOrDefaultAsync<EmployeeDto>(SqlQuery, new { EmpId = Id });
+                }
+                emp.Flag = ApplicationConstants.successFlag;
+                emp.message = "Data Fetched Successfully!";
+                return emp;
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = ex.ToString();
+                return emp;
+            }
         }
     }
 }
