@@ -7,9 +7,9 @@ namespace DTO.DTOModels
 {
    public class EmployeeDto
     {
-        public DepartmentType DepartmentType { get; set; }
+        public int DepartmentTypeId { get; set; }
 
-        public EmployeeType EmployeeType { get; set; }
+        public int EmployeeTypeId { get; set; }
 
         public string FirstName { get; set; }
 
@@ -17,15 +17,19 @@ namespace DTO.DTOModels
 
         public string LastName { get; set; }
 
-        public string Email { get; set; }
+        public string EmailId { get; set; }
 
         public string Address { get; set; }
 
-        public string RefrenceBy { get; set; }
+        public string ReferenceBy { get; set; }
 
-        public AddresAndIdentity AddressProof { get; set; }
+        public int AddressProofId { get; set; }
 
-        public AddresAndIdentity IdentityProof { get; set; }
+        public int IdentityProofId { get; set; }
+
+        public string AddressProof { get; set; }
+
+        public string IdentityProof { get; set; }
 
         public string Photo { get; set; }
 
@@ -33,9 +37,9 @@ namespace DTO.DTOModels
 
         public string AlternateMobileNo { get; set; }
 
-        public DateTime JoiningDate { get; set; }
+        public DateTime? JoiningDate { get; set; }
 
-        public DateTime ReleivingDate { get; set; }
+        public DateTime? ReleivingDate { get; set; }
 
         public bool Status { get; set; }
     }

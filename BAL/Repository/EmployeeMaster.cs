@@ -18,17 +18,30 @@ namespace BLL.Repository
             _conn = conn;
         }
 
-        public async Task<SingleReturnResult<string>> AddUpdateEmployee(List<EmployeeDto> employeeDto)
+        public async Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto)
         {
             SingleReturnResult<string> result = new SingleReturnResult<string>();
             try
             {
-                //string result = "";
-                DataTable dtEmpolyee = _conn.ToDataTable(employeeDto);
-                //List<StoreProcedureParameter> storeProcedureParameters = new List<StoreProcedureParameter>();
-                //dtCompany.Columns.Remove("CompanyId");
 
-                object stat = _conn.ExecuteProcedure("InsertOrUpdateEmpMaster", new SqlParameter("EmpDetail", dtEmpolyee));
+                object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
+                                                                                    new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
+                                                                                    new SqlParameter("FirstName", employeeDto.FirstName),
+                                                                                    new SqlParameter("MiddleName", employeeDto.MiddleName),
+                                                                                   new SqlParameter("LastName", employeeDto.LastName),
+                                                                                   new SqlParameter("EmailId", employeeDto.EmailId),
+                                                                                  new SqlParameter("Address", employeeDto.Address),
+                                                                                  new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
+                                                                                 new SqlParameter("AddressProofId", employeeDto.AddressProofId),
+                                                                                 new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
+                                                                                 new SqlParameter("AddressProof", employeeDto.AddressProof),
+                                                                                 new SqlParameter("IdentityProof", employeeDto.IdentityProof),
+                                                                                 new SqlParameter("Photo", employeeDto.Photo),
+                                                                                 new SqlParameter("MobileNo", employeeDto.MobileNo),
+                                                                                 new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
+                                                                                 new SqlParameter("JoiningDate", employeeDto.JoiningDate),
+                                                                                 new SqlParameter("ReleavingDate", employeeDto.ReleivingDate),
+                                                                                 new SqlParameter("Status", employeeDto.Status));
                 if (stat != null)
                 {
                     result.Flag = ApplicationConstants.successFlag;
