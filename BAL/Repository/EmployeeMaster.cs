@@ -1,10 +1,12 @@
 ﻿using BLL.Interface;
 using DTO.DTOModels;
+using Microsoft.AspNetCore.Http;
 using Services.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +20,7 @@ namespace BLL.Repository
             _conn = conn;
         }
 
-        public async Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto)
+        public async Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto,IFormFileCollection files)
         {
             SingleReturnResult<string> result = new SingleReturnResult<string>();
             try
@@ -34,9 +36,12 @@ namespace BLL.Repository
                                                                                   new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
                                                                                  new SqlParameter("AddressProofId", employeeDto.AddressProofId),
                                                                                  new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
-                                                                                 new SqlParameter("AddressProof", employeeDto.AddressProof),
-                                                                                 new SqlParameter("IdentityProof", employeeDto.IdentityProof),
-                                                                                 new SqlParameter("Photo", employeeDto.Photo),
+                                                                                 //new SqlParameter("AddressProof", employeeDto.AddressProof),
+                                                                                 //new SqlParameter("IdentityProof", employeeDto.IdentityProof),
+                                                                                 //new SqlParameter("Photo", employeeDto.Photo),
+                                                                                 new SqlParameter("AddressProof", "addrewsspo"),
+                                                                                 new SqlParameter("IdentityProof", "addrewsspo"),
+                                                                                 new SqlParameter("Photo", "addrewsspo"),
                                                                                  new SqlParameter("MobileNo", employeeDto.MobileNo),
                                                                                  new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
                                                                                  new SqlParameter("JoiningDate", employeeDto.JoiningDate),
@@ -47,6 +52,21 @@ namespace BLL.Repository
                     result.Flag = ApplicationConstants.successFlag;
                     result.message = "Data Inserted Successfully";
                     result.result = "Ok";
+
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                file.CopyTo(ms);
+                                var fileBytes = ms.ToArray();
+                                saveFile(fileBytes);
+                                //string s = Convert.ToBase64String(fileBytes);
+                                // act on the Base64 data
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -68,6 +88,14 @@ namespace BLL.Repository
         public Task<ListReturnResult<EmployeeDto>> GetAllCompany()
         {
             throw new NotImplementedException();
+        }
+
+        public void saveFile(byte[] file)
+        {
+            using (FileStream files = new FileStream(@"C:\test\12.png", FileMode.Create,FileAccess.ReadWrite))
+            {
+                files.Write(file, 0, file.Length);
+            }
         }
     }
 }

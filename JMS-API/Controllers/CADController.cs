@@ -59,14 +59,14 @@ namespace API.Controllers
             return response;
         }
 
-        //[HttpPost]
-        //[Route("updateDetails")]
-        //public async Task<IActionResult> updateDetails([FromBody] CADDepartmentDto cadDetails)
-        //{
-        //    IActionResult response = Unauthorized();
-        //    SingleReturnResult<CADDepartmentDto> cadDetail = await _cad.UpdateCAD(cadDetails);
-        //    response = Ok(cadDetail);
-        //    return response;
-        //}
+        [HttpPost]
+        [Route("updateDetails")]
+        public async Task<IActionResult> updateDetails([FromBody] CADDepartmentDto cadDetails)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<CADDepartmentDto> cadDetail = await _cad.UpdateCAD(cadDetails);
+            response = Ok(cadDetail);
+            return response;
+        }
     }
 }

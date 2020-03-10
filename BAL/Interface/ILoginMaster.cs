@@ -9,6 +9,6 @@ namespace BLL.Interface
     public interface ILoginMaster
     {
         Task<SingleReturnResult<string>> AuthenticateUser(LoginDto loginDetails);
-        //Task<SingleReturnResult<LoginDto>> RegisterUser(LoginDto userDetails);
+        Task<SingleReturnResult<LoginDto>> RegisterUser(LoginDto userDetails);
     }
 }

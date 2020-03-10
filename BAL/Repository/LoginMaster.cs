@@ -66,12 +66,37 @@ namespace BLL.Repository
 
             try
             {
-                return result;
+
+                object insertResult = _conn.ExecuteProcedure("RegisterUser", new SqlParameter("userName", userDetails.username),
+                                                                    new SqlParameter("password", userDetails.password),
+                                                                    new SqlParameter("email", userDetails.email),
+                                                                    new SqlParameter("mobile", userDetails.mobile),
+                                                                    new SqlParameter("roleId", userDetails.role));
+
+                if (insertResult != null)
+                {
+                    if (insertResult.ToString() == "S")
+                    {
+                        result.Flag = ApplicationConstants.successFlag;
+                        result.message = "User registered Successfully !";
+                    }
+                    else
+                    {
+                        result.Flag = ApplicationConstants.failureFlag;
+                        result.message = insertResult.ToString();
+                    }
+                }
+                else
+                {
+                    result.Flag = ApplicationConstants.failureFlag;
+                    result.message = "Some error has occured while registering the user, please try again after sometime";
+                }
+                return await Task.FromResult(result);
             }
             catch (Exception ex)
             {
                 result.Flag = ApplicationConstants.failureFlag;
-                result.message = "Some error has occured while registering the user, please try again after sometime";
+                result.message = ex.ToString();
                 return result;
             }
         }

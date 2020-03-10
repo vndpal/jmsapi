@@ -20,6 +20,4 @@ namespace DTO.DTOModels
         public string DesignImage { get; set; }
         public List<DiamondDetailDto> diamondDetail { get; set; }
     }
-
-
 }

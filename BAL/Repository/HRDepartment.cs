@@ -31,7 +31,7 @@ namespace BLL.Repository
                 dtHRDept.Columns.Remove("Department");
                 dtHRDept.Columns.Remove("Employee");
 
-                object stat = _conn.ExecuteProcedure("InsertUpdateHRDepartment", new SqlParameter("HRDepartment", dtHRDept));
+        object stat = _conn.ExecuteProcedure("InsertUpdateHRDepartment", new SqlParameter("HRDepartment", dtHRDept));
                                                                                    
                 if (stat != null)
                 {

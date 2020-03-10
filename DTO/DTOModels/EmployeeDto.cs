@@ -27,11 +27,11 @@ namespace DTO.DTOModels
 
         public int IdentityProofId { get; set; }
 
-        public string AddressProof { get; set; }
+        //public string AddressProof { get; set; }
 
-        public string IdentityProof { get; set; }
+        //public string IdentityProof { get; set; }
 
-        public string Photo { get; set; }
+        //public string Photo { get; set; }
 
         public string MobileNo { get; set; }
 
@@ -41,6 +41,6 @@ namespace DTO.DTOModels
 
         public DateTime? ReleivingDate { get; set; }
 
-        public bool Status { get; set; }
+        public int Status { get; set; }
     }
 }

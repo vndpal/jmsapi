@@ -38,38 +38,18 @@ namespace API.Controllers
             return Response;
         }
 
-        //[HttpPost]
-        //[Route("Register")]
-        //public IActionResult Register([FromBody]LoginDto userDetails)
-        //{
-        //    IActionResult Response = Unauthorized("Invalied User");
-        //    LoginService loginService = new LoginService();
-        //    LoginDto s = loginService.RegisterLogin(userDetails);
-        //    return Response;
-        //}
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register([FromBody]LoginDto userDetails)
+        {
+            IActionResult Response = Unauthorized("Invalied User");
 
-        //[AllowAnonymous]
-        //[HttpPost]
-        //public IActionResult Login([FromBody]LoginDto login)
-        //{
-        //    IActionResult Response = Unauthorized();
+            SingleReturnResult<LoginDto> registerDetails = await _login.RegisterUser(userDetails);
+            Response = Ok(registerDetails);
+            return Response;
+        }
 
-        //    LoginService loginSer = new LoginService();
 
-        //    var user = loginSer.AuthenticateUser(login);
-        //    //var user = _login.AuthenticateUser(login);
-
-        //    if (user != null)
-        //    {
-
-        //        var tokenString = GenerateJSONWebToken(login);
-        //        Response = Ok(new { token = tokenString });
-        //    }
-
-        //    return Response;
-        //}
-
-        
 
     }
 }

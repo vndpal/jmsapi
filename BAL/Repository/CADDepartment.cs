@@ -27,8 +27,6 @@ namespace BLL.Repository
                 //string result = "";
                 DataTable dtCAD = _conn.ToDataTable(cad);
                 dtCAD.Columns.Remove("CADId");
-                dtCAD.Columns.Remove("JobNo");
-                dtCAD.Columns.Remove("Employee");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateCAD", new SqlParameter("CADDetails", dtCAD));
                 if (stat != null)
@@ -59,11 +57,11 @@ namespace BLL.Repository
             ListReturnResult<CADDepartmentDto> cad = new ListReturnResult<CADDepartmentDto>();
             try
             {
-                string SqlProc = "GetCAD";
+                string SqlQuery = "SELECT * FROM Department_CAD";
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
-                    cad.result = connection.Query<CADDepartmentDto>(SqlProc , commandType: CommandType.StoredProcedure).AsList();
+                    cad.result = connection.Query<CADDepartmentDto>(SqlQuery).AsList();
 
                 }
                 cad.Flag = ApplicationConstants.successFlag;
@@ -127,45 +125,45 @@ namespace BLL.Repository
             }
         }
 
-        //public async Task<SingleReturnResult<CADDepartmentDto>> UpdateCAD(CADDepartmentDto caddetails)
-        //{
-        //    SingleReturnResult<CADDepartmentDto> cad = new SingleReturnResult<CADDepartmentDto>();
-        //    try
-        //    {
-        //        string SqlQuery = "UPDATE Department_CAD SET JobId=@JobId ,IssueDate=@IssueDate ,ReceivedDate=@ReceivedDate," +
-        //                          "PieceQuantity=@PieceQuantity,ResinType=@ResinType,RPTWeight=@RPTWeight,RPTRate=@RPTRate," +
-        //                          "Amount=@Amount,Remark=@Remark,ModifiedOn=@ModifiedOn,ModifiedBy=@ModifiedBy,Status=@Status" +
-        //                          "WHERE CADId=@CADId";
+        public async Task<SingleReturnResult<CADDepartmentDto>> UpdateCAD(CADDepartmentDto caddetails)
+        {
+            SingleReturnResult<CADDepartmentDto> cad = new SingleReturnResult<CADDepartmentDto>();
+            try
+            {
+                string SqlQuery = "UPDATE Department_CAD SET JobId=@JobId ,IssueDate=@IssueDate ,ReceivedDate=@ReceivedDate," +
+                                  "PieceQuantity=@PieceQuantity,ResinType=@ResinType,RPTWeight=@RPTWeight,RPTRate=@RPTRate," +
+                                  "Amount=@Amount,Remark=@Remark,ModifiedOn=@ModifiedOn,ModifiedBy=@ModifiedBy,Status=@Status" +
+                                  "WHERE CADId=@CADId";
 
-        //        using (var connection = new SqlConnection(_conn.strConnectionString()))
-        //        {
-        //            await connection.OpenAsync();
-        //            cad.result = await connection.QueryFirstOrDefaultAsync<CADDepartmentDto>(SqlQuery, new
-        //            {
-        //                CADId = caddetails.CADId,
-        //                JobId = caddetails.JobId,
-        //                IssueDate = caddetails.IssueDate,
-        //                ReceivedDate = caddetails.ReceivedDate,
-        //                PieceQuantity = caddetails.PieceQuantity,
-        //                ResinType = caddetails.ResinType,
-        //                RPTWeight = caddetails.RPTWeight,
-        //                RPTRate = caddetails.RPTRate,
-        //                Amount = caddetails.Amount,
-        //                Remark = caddetails.Remark,
-        //                Status = caddetails.Status
-        //            });
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    cad.result = await connection.QueryFirstOrDefaultAsync<CADDepartmentDto>(SqlQuery, new
+                    {
+                        CADId = caddetails.CADId,
+                        JobId = caddetails.JobId,
+                        IssueDate = caddetails.IssueDate,
+                        ReceivedDate = caddetails.ReceivedDate,
+                        PieceQuantity = caddetails.PieceQuantity,
+                        ResinType = caddetails.ResinType,
+                        RPTWeight = caddetails.RPTWeight,
+                        RPTRate = caddetails.RPTRate,
+                        Amount = caddetails.Amount,
+                        Remark = caddetails.Remark,
+                        Status = caddetails.Status
+                    });
 
-        //        }
-        //        cad.Flag = ApplicationConstants.successFlag;
-        //        cad.message = "Data Fetched Successfully!";
-        //        return cad;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        cad.Flag = ApplicationConstants.failureFlag;
-        //        cad.message = ex.ToString();
-        //        return cad;
-        //    }
-       // }
+                }
+                cad.Flag = ApplicationConstants.successFlag;
+                cad.message = "Data Fetched Successfully!";
+                return cad;
+            }
+            catch (Exception ex)
+            {
+                cad.Flag = ApplicationConstants.failureFlag;
+                cad.message = ex.ToString();
+                return cad;
+            }
+        }
     }
 }
