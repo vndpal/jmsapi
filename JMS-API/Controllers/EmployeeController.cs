@@ -72,12 +72,25 @@ namespace JMS_API.Controllers
             }
         }
 
-        public void saveFile(byte[] file)
+        [HttpGet]
+        [Route("EmployeeDetails")]
+        public async Task<IActionResult> EmployeeDetails()
         {
-            using (FileStream files = new FileStream(@"C:\website", FileMode.Create, FileAccess.ReadWrite))
-            {
-                files.Write(file, 0, file.Length);
-            }
+            IActionResult response = Unauthorized();
+            ListReturnResult<EmployeeDto> employeeDetails = await _emp.GetAllEmployee();
+            response = Ok(employeeDetails);
+            return response;
         }
+
+        [HttpGet("{id}")]
+        [Route("EmployeeDetail")]
+        public async Task<IActionResult> EmployeeDetail(int id)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<EmployeeDto> employeeDetail = await _emp.GetEmployee(id);
+            response = Ok(employeeDetail);
+            return response;
+        }
+
     }
 }

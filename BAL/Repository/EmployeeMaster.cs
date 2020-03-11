@@ -1,4 +1,5 @@
 ﻿using BLL.Interface;
+using Dapper;
 using DTO.DTOModels;
 using Microsoft.AspNetCore.Http;
 using Services.Entities;
@@ -85,9 +86,52 @@ namespace BLL.Repository
             }
         }
 
-        public Task<ListReturnResult<EmployeeDto>> GetAllCompany()
+        public async Task<ListReturnResult<EmployeeDto>> GetAllEmployee()
         {
-            throw new NotImplementedException();
+            ListReturnResult<EmployeeDto> emp = new ListReturnResult<EmployeeDto>();
+            try
+            {
+                string SqlQuery = "SELECT * FROM Employees";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    emp.result = connection.Query<EmployeeDto>(SqlQuery).AsList();
+                }
+                emp.Flag = ApplicationConstants.successFlag;
+                emp.message = "Data Fetched successfully";
+                return emp;
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = ex.ToString();
+                return emp;
+            }
+        }
+
+        public async Task<SingleReturnResult<EmployeeDto>> GetEmployee(int Id)
+        {
+            SingleReturnResult<EmployeeDto> emp = new SingleReturnResult<EmployeeDto>();
+            try
+            {
+                string SqlQuery = "SELECT * FROM Employees WHERE EmpId = @EmpId";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    emp.result = await connection.QueryFirstOrDefaultAsync<EmployeeDto>(SqlQuery, new { EmpId = Id });
+                }
+                emp.Flag = ApplicationConstants.successFlag;
+                emp.message = "Data Fetched Successfully!";
+                return emp;
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = ex.ToString();
+                return emp;
+            }
         }
 
         public void saveFile(byte[] file)

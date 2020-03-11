@@ -9,6 +9,9 @@ namespace BLL.Interface
 {
     public interface IEmployeeMaster
     {
+        Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto);
+        Task<ListReturnResult<EmployeeDto>> GetAllEmployee();
+        Task<SingleReturnResult<EmployeeDto>> GetEmployee(int Id);
         Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto,IFormFileCollection Files);
         Task<ListReturnResult<EmployeeDto>> GetAllCompany();
     } 
