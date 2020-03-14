@@ -7,6 +7,10 @@ namespace DTO.DTOModels
 {
    public class EmployeeDto
     {
+        public int EmpId { get; set; }
+
+        public string EmployeeCode { get; set; }
+
         public int DepartmentTypeId { get; set; }
 
         public int EmployeeTypeId { get; set; }
@@ -27,11 +31,11 @@ namespace DTO.DTOModels
 
         public int IdentityProofId { get; set; }
 
-        //public string AddressProof { get; set; }
+        public string AddressProof { get; set; }
 
-        //public string IdentityProof { get; set; }
+        public string IdentityProof { get; set; }
 
-        //public string Photo { get; set; }
+        public string Photo { get; set; }
 
         public string MobileNo { get; set; }
 

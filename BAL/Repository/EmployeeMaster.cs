@@ -26,7 +26,7 @@ namespace BLL.Repository
             SingleReturnResult<string> result = new SingleReturnResult<string>();
             try
             {
-
+                
                 object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
                                                                                     new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
                                                                                     new SqlParameter("FirstName", employeeDto.FirstName),
@@ -37,9 +37,6 @@ namespace BLL.Repository
                                                                                   new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
                                                                                  new SqlParameter("AddressProofId", employeeDto.AddressProofId),
                                                                                  new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
-                                                                                 //new SqlParameter("AddressProof", employeeDto.AddressProof),
-                                                                                 //new SqlParameter("IdentityProof", employeeDto.IdentityProof),
-                                                                                 //new SqlParameter("Photo", employeeDto.Photo),
                                                                                  new SqlParameter("AddressProof", "addrewsspo"),
                                                                                  new SqlParameter("IdentityProof", "addrewsspo"),
                                                                                  new SqlParameter("Photo", "addrewsspo"),
@@ -62,9 +59,11 @@ namespace BLL.Repository
                             {
                                 file.CopyTo(ms);
                                 var fileBytes = ms.ToArray();
-                                saveFile(fileBytes);
-                                //string s = Convert.ToBase64String(fileBytes);
-                                // act on the Base64 data
+                                var fileExtension = file.FileName.Split(".");
+                                var fileExtensionType = fileExtension[fileExtension.Length - 1];
+                                var fileName = stat.ToString() + "_Employee_" + file.Name + "." + fileExtensionType;
+                                int employeeId = int.Parse(stat.ToString());
+                                saveFile(fileBytes, fileName,file.Name,employeeId);
                             }
                         }
                     }
@@ -134,11 +133,32 @@ namespace BLL.Repository
             }
         }
 
-        public void saveFile(byte[] file)
+        public void saveFile(byte[] file, string FileName, string fileType,int employeeId)
         {
-            using (FileStream files = new FileStream(@"C:\test\12.png", FileMode.Create,FileAccess.ReadWrite))
+            using (FileStream files = new FileStream(@"C:\test\" + FileName, FileMode.Create,FileAccess.ReadWrite))
             {
                 files.Write(file, 0, file.Length);
+
+                string SqlQuery = "Update Employees set  WHERE EmpId = @EmpId";
+
+                if (fileType.ToUpper() == "AddressProof".ToUpper())
+                {
+                    SqlQuery = "Update Employees set AddressProof = @FilePath WHERE EmpId = @EmpId";
+                }
+                else if (fileType.ToUpper() == "IdentityProof".ToUpper())
+                {
+                    SqlQuery = "Update Employees set IdentityProof = @FilePath WHERE EmpId = @EmpId";
+                }
+                else if (fileType.ToUpper() == "Photo".ToUpper())
+                {
+                    SqlQuery = "Update Employees set Photo = @FilePath WHERE EmpId = @EmpId";
+                }
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    connection.Open();
+                    var result = connection.QueryFirstOrDefault(SqlQuery, new { EmpId = employeeId, FilePath = @"C:\test\" + FileName });
+                }
             }
         }
     }
