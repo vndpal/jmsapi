@@ -24,7 +24,7 @@ namespace BLL.Repository
             InventoryDto inventoryDto = new InventoryDto();
             try
             {
-                var procResult = _conn.ExecuteProcedure("InsertUpdateInventory", new SqlParameter("ProcType", "INSERT")
+                var procResult = _conn.ExecuteProcedure("InsertUpdateInventory",  new SqlParameter("ProcType", "INSERT")
                                                                                 , new SqlParameter("InvId", inventory.InvId)
                                                                                 , new SqlParameter("InvDate", inventory.InvDate)
                                                                                 , new SqlParameter("Company", inventory.Company)
