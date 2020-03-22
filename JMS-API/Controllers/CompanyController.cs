@@ -23,11 +23,11 @@ namespace API.Controllers
         // public ICompanyMaster _Comp { get; }
 
         [HttpPost]
-        [Route("CompanyRegister")]
-        public async Task<IActionResult> CompanyRegistration([FromBody]List<CompanyMasterDto> companyDetails)
+        [Route("AddCompany")]
+        public async Task<IActionResult> CompanyRegistration([FromBody]CompanyMasterDto companyDetails)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<string> newCompanyDetails = await _comp.AddUpdateCompany(companyDetails);
+            SingleReturnResult<string> newCompanyDetails = await _comp.AddCompany(companyDetails);
             response = Ok(newCompanyDetails);
             return response;
         }
@@ -43,22 +43,22 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-       // [Route("CompanyDetails")]
-        public async Task<IActionResult> CompanyDetail(int id)
+      //  [Route("CompanyDetailsById")]
+        public IActionResult CompanyDetail(int id)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<CompanyMasterDto> companyDetail = await _comp.GetCompany(id);
+            SingleReturnResult<CompanyMasterDto> companyDetail = _comp.GetCompany(id);
             response = Ok(companyDetail);
             return response;
         }
 
         [HttpPost]
-        [Route("updateDetails")]
-        public async Task<IActionResult> updateDetails([FromBody] CompanyMasterDto companyDetails)
+        [Route("UpdateCompany")]
+        public async Task<IActionResult> UpdateCompany([FromBody]CompanyMasterDto companyDetails)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<CompanyMasterDto> companyDetail = await _comp.updateCompany(companyDetails);
-            response = Ok(companyDetail);
+            SingleReturnResult<string> newCompanyDetails = await _comp.UpdateCompany(companyDetails);
+            response = Ok(newCompanyDetails);
             return response;
         }
     }

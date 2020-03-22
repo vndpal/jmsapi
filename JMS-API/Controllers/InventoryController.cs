@@ -33,10 +33,10 @@ namespace API.Controllers
         [Route("UpdateInventory")]
         public async Task<IActionResult> UpdateInventory([FromBody] InventoryDto inventory)
         {
-            IActionResult response = Unauthorized();
-            SingleReturnResult<InventoryDto> result = await _inventory.UpdateInventory(inventory);
-            response = Ok(result);
-            return response;
+                IActionResult response = Unauthorized();
+                SingleReturnResult<InventoryDto> result = await _inventory.UpdateInventory(inventory);
+                response = Ok(result); 
+                return response;
         }
 
         [HttpGet]

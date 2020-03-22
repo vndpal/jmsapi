@@ -8,9 +8,9 @@ namespace BLL.Interface
 {
     public interface ICompanyMaster
     {
-       Task<SingleReturnResult<string>> AddUpdateCompany(List<CompanyMasterDto> comp);
+       Task<SingleReturnResult<string>> AddCompany(CompanyMasterDto comp);
        Task<ListReturnResult<CompanyMasterDto>> GetAllCompany();
-       Task<SingleReturnResult<CompanyMasterDto>> GetCompany(int Id);
-       Task<SingleReturnResult<CompanyMasterDto>> updateCompany(CompanyMasterDto companyDetails);
+       SingleReturnResult<CompanyMasterDto> GetCompany(int Id);
+        Task<SingleReturnResult<string>> UpdateCompany(CompanyMasterDto comp);
     }
 }
