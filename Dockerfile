@@ -16,4 +16,4 @@ WORKDIR /app
 COPY --from=publish /src/publish .
 # ENTRYPOINT ["dotnet", "Corona.API.dll"]
 # heroku uses the following
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet JMS-API.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet API.dll
