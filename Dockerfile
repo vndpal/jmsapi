@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY *.sln .
-COPY JMS-API/*.csproj JMS-API/
+COPY JMS-API/*.csproj API/
 RUN dotnet restore
 WORKDIR /src/Services
 COPY Services/*.csproj Services/
