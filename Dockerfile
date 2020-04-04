@@ -3,8 +3,15 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY *.sln .
 COPY JMS-API/*.csproj JMS-API/
-COPY BAL/*.csproj BLL/
+RUN dotnet restore
+WORKDIR /src/Services
+COPY Services/*.csproj Services/
+RUN dotnet restore
+WORKDIR /src/DAL
 COPY DAL/*.csproj DAL/
+RUN dotnet restore
+WORKDIR /src/BAL
+COPY BAL/*.csproj DLL/
 RUN dotnet restore
 COPY . .
 
