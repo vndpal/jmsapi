@@ -4,15 +4,6 @@ WORKDIR /src
 COPY *.sln .
 COPY JMS-API/*.csproj JMS-API/
 RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
-WORKDIR /src/Services
-COPY Services/*.csproj Services/
-RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
-WORKDIR /src/DAL
-COPY DAL/*.csproj DAL/
-RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
-WORKDIR /src/BAL
-COPY BAL/*.csproj BAL/
-RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
 COPY . .
 
 # publish
