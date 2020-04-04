@@ -34,43 +34,43 @@ namespace JMS_API.Controllers
         //    return response;
         //}
 
-        [HttpPost]
-        [Route("EmployeeRegister1")]
-        public async Task<IActionResult> EmployeeRegister1()
-        {
-            try
-            {
-                var postvalues = HttpContext.Request.Form;
+        //[HttpPost]
+        //[Route("EmployeeRegister1")]
+        //public async Task<IActionResult> EmployeeRegister1()
+        //{
+        //    try
+        //    {
+        //        var postvalues = HttpContext.Request.Form;
 
-                if (HttpContext.Request.Form.Files.Count() == 0)
-                {
-                    return BadRequest("No files Found");
-                }
+        //        if (HttpContext.Request.Form.Files.Count() == 0)
+        //        {
+        //            return BadRequest("No files Found");
+        //        }
 
-                Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
-                foreach (var s in postvalues)
-                {
-                    FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
-                }
+        //        Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
+        //        foreach (var s in postvalues)
+        //        {
+        //            FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
+        //        }
 
-                var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
+        //        var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
 
-                var empDetails = JsonConvert.DeserializeObject<EmployeeDto>(formDataJSON);
+        //        var empDetails = JsonConvert.DeserializeObject<EmployeeDto>(formDataJSON);
 
-                var files = HttpContext.Request.Form.Files;
+        //        var files = HttpContext.Request.Form.Files;
 
                 
-                IActionResult response = Unauthorized();
+        //        IActionResult response = Unauthorized();
 
-                SingleReturnResult<string> newEmployee = await _emp.AddUpdateEmployee(empDetails, files);
-                response = Ok("data inserted succssul;e");
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return Ok();
-            }
-        }
+        //        SingleReturnResult<string> newEmployee = await _emp.AddUpdateEmployee(empDetails, files);
+        //        response = Ok("data inserted succssul;e");
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Ok();
+        //    }
+        //}
 
         [HttpGet]
         [Route("EmployeeDetails")]
