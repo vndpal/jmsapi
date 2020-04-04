@@ -2,17 +2,17 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY *.sln .
-COPY JMS-API/*.csproj API/
-RUN dotnet restore
+COPY JMS-API/*.csproj JMS-API/
+RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
 WORKDIR /src/Services
 COPY Services/*.csproj Services/
-RUN dotnet restore
+RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
 WORKDIR /src/DAL
 COPY DAL/*.csproj DAL/
-RUN dotnet restore
+RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
 WORKDIR /src/BAL
-COPY BAL/*.csproj DLL/
-RUN dotnet restore
+COPY BAL/*.csproj BAL/
+RUN dotnet restore -p:RestoreUseSkipNonexistentTargets=false
 COPY . .
 
 # publish
