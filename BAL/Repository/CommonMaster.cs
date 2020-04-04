@@ -31,7 +31,7 @@ namespace BLL.Repository
                 }
 
                 commonResult.Flag = ApplicationConstants.successFlag;
-                commonResult.message = "Data fetched Successfully !";
+                commonResult.message = "Data fetched Successfully from common master !";
             }
             catch (Exception ex)
             {
