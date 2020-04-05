@@ -40,5 +40,29 @@ namespace BLL.Repository
             }
             return commonResult;
         }
+        
+          public async Task<ListReturnResult<JobMasterDto>> getJobMaster()
+        {
+            ListReturnResult<JobMasterDto> jobData = new ListReturnResult<JobMasterDto>();
+            try
+            {
+                string sqlQuery = "select JobId , JobNo ,ClientJobNo from JobMaster";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    jobData.result = connection.Query<JobMasterDto>(sqlQuery).AsList();
+                }
+
+                jobData.Flag = ApplicationConstants.successFlag;
+                jobData.message = "Data fetched Successfully !";
+            }
+            catch (Exception ex)
+            {
+                jobData.Flag = ApplicationConstants.failureFlag;
+                jobData.message = "Some error has occured while fetching the data" + ex.ToString();
+            }
+            return jobData;
+        }
     }
 }
