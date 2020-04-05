@@ -105,6 +105,10 @@ namespace BLL.Repository
                 for (int i = 0; i < compTypeId.Length; i++)
                 {
                     object companyTypeValue = _conn.ExecuteProcedure("GetCompanyById", new SqlParameter("CompanyTypeId", compTypeId[i]));
+                    if (companyTypeValue == null)
+                    {
+                        companyTypeValue = string.Empty;
+                    }
                     ObjectComapnyType.Add(companyTypeValue.ToString());
                 }
 
@@ -114,6 +118,10 @@ namespace BLL.Repository
                 for (int i = 0; i < fieldTypeId.Length; i++)
                 {
                     object fieldTypeValue = _conn.ExecuteProcedure("GetCompanyById", new SqlParameter("FieldTypeId", fieldTypeId[i]));
+                    if (fieldTypeValue == null)
+                    {
+                        fieldTypeValue = string.Empty;
+                    }
                     ObjectFieldType.Add(fieldTypeValue.ToString());
                 }
 
