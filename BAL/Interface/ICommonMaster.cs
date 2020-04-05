@@ -9,5 +9,6 @@ namespace BLL.Interface
     public interface ICommonMaster
     {
         Task<ListReturnResult<CommonMasterDto>> getCommonDetailsAsync(string mstGroup);
+        Task<ListReturnResult<JobMasterDto>> getJobMaster();
     }
 }
