@@ -1,7 +1,7 @@
 ﻿using BLL.Interface;
 using Dapper;
 using DTO.DTOModels;
-//using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Services.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,69 +21,79 @@ namespace BLL.Repository
             _conn = conn;
         }
 
-        //public async Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto,IFormFileCollection files)
-        //{
-        //    SingleReturnResult<string> result = new SingleReturnResult<string>();
-        //    try
-        //    {
-                
-        //        object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
-        //                                                                            new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
-        //                                                                            new SqlParameter("FirstName", employeeDto.FirstName),
-        //                                                                            new SqlParameter("MiddleName", employeeDto.MiddleName),
-        //                                                                           new SqlParameter("LastName", employeeDto.LastName),
-        //                                                                           new SqlParameter("EmailId", employeeDto.EmailId),
-        //                                                                          new SqlParameter("Address", employeeDto.Address),
-        //                                                                          new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
-        //                                                                         new SqlParameter("AddressProofId", employeeDto.AddressProofId),
-        //                                                                         new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
-        //                                                                         new SqlParameter("AddressProof", "addrewsspo"),
-        //                                                                         new SqlParameter("IdentityProof", "addrewsspo"),
-        //                                                                         new SqlParameter("Photo", "addrewsspo"),
-        //                                                                         new SqlParameter("MobileNo", employeeDto.MobileNo),
-        //                                                                         new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
-        //                                                                         new SqlParameter("JoiningDate", employeeDto.JoiningDate),
-        //                                                                         new SqlParameter("ReleavingDate", employeeDto.ReleivingDate),
-        //                                                                         new SqlParameter("Status", employeeDto.Status));
-        //        if (stat != null)
-        //        {
-        //            result.Flag = ApplicationConstants.successFlag;
-        //            result.message = "Data Inserted Successfully";
-        //            result.result = "Ok";
+        public async Task<SingleReturnResult<string>> AddUpdateEmployee(EmployeeDto employeeDto, IFormFileCollection files)
+        {
+            SingleReturnResult<string> result = new SingleReturnResult<string>();
+            try
+            {
 
-        //            foreach (var file in files)
-        //            {
-        //                if (file.Length > 0)
-        //                {
-        //                    using (var ms = new MemoryStream())
-        //                    {
-        //                        file.CopyTo(ms);
-        //                        var fileBytes = ms.ToArray();
-        //                        var fileExtension = file.FileName.Split(".");
+                object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
+                                                                                    new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
+                                                                                    new SqlParameter("FirstName", employeeDto.FirstName),
+                                                                                    new SqlParameter("MiddleName", employeeDto.MiddleName),
+                                                                                   new SqlParameter("LastName", employeeDto.LastName),
+                                                                                   new SqlParameter("EmailId", employeeDto.EmailId),
+                                                                                  new SqlParameter("Address", employeeDto.Address),
+                                                                                  new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
+                                                                                 new SqlParameter("AddressProofId", employeeDto.AddressProofId),
+                                                                                 new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
+                                                                                 new SqlParameter("AddressProof", "addrewsspo"),
+                                                                                 new SqlParameter("IdentityProof", "addrewsspo"),
+                                                                                 new SqlParameter("Photo", "addrewsspo"),
+                                                                                 new SqlParameter("MobileNo", employeeDto.MobileNo),
+                                                                                 new SqlParameter("AlternateMobileNo", employeeDto.AlternateMobileNo),
+                                                                                 new SqlParameter("JoiningDate", employeeDto.JoiningDate),
+                                                                                 new SqlParameter("ReleavingDate", employeeDto.ReleivingDate),
+                                                                                 new SqlParameter("Status", employeeDto.Status));
+                if (stat != null)
+                {
+                    result.Flag = ApplicationConstants.successFlag;
+                    result.message = "Data Inserted Successfully";
+                    result.result = "Ok";
+
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                file.CopyTo(ms);
+                                var fileBytes = ms.ToArray();
+
+                        object sstat = _conn.ExecuteProcedure("UploadFileIntoDB", new SqlParameter("filedata", fileBytes)
+                                                                                , new SqlParameter("filetype", file.Name)
+                                                                                , new SqlParameter("filegroup", "Employee")
+                                                                                , new SqlParameter("refId", int.Parse(stat.ToString()))
+                                                                                , new SqlParameter("filename", file.FileName)
+                                                                                , new SqlParameter("contentType", file.ContentType)
+                                                                                , new SqlParameter("uploadedBy", 1));
+
+
+        //var fileExtension = file.FileName.Split(".");
         //                        var fileExtensionType = fileExtension[fileExtension.Length - 1];
         //                        var fileName = stat.ToString() + "_Employee_" + file.Name + "." + fileExtensionType;
         //                        int employeeId = int.Parse(stat.ToString());
-        //                        saveFile(fileBytes, fileName,file.Name,employeeId);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            result.Flag = ApplicationConstants.failureFlag;
-        //            result.message = "some error has occured while inserting the data";
-        //            result.result = "";
-        //        }
+                                //saveFile(fileBytes, fileName, file.Name, employeeId);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    result.Flag = ApplicationConstants.failureFlag;
+                    result.message = "some error has occured while inserting the data";
+                    result.result = "";
+                }
 
-        //        return await Task.FromResult(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Flag = ApplicationConstants.failureFlag;
-        //        result.message = ex.ToString();
-        //        return result;
-        //    }
-        //}
+                return await Task.FromResult(result);
+            }
+            catch (Exception ex)
+            {
+                result.Flag = ApplicationConstants.failureFlag;
+                result.message = ex.ToString();
+                return result;
+            }
+        }
 
         public async Task<ListReturnResult<EmployeeDto>> GetAllEmployee()
         {
@@ -123,6 +133,40 @@ namespace BLL.Repository
                 }
                 emp.Flag = ApplicationConstants.successFlag;
                 emp.message = "Data Fetched Successfully!";
+                return emp;
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = ex.ToString();
+                return emp;
+            }
+        }
+
+        public async Task<SingleReturnResult<FilesDto>> getFile(string group, int refId, string type)
+        {
+            SingleReturnResult<FilesDto> emp = new SingleReturnResult<FilesDto>();
+            try
+            {
+                string SqlQuery = "select top 1 * from Files where filetype=@typeFile and refId=@referenceId and fileGroup=@groupFile";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    var result = await connection.QueryFirstOrDefaultAsync<FilesDto>(SqlQuery, new { typeFile = type, referenceId=refId, groupFile = group });
+                    if (result == null)
+                    {
+                        emp.Flag = ApplicationConstants.failureFlag;
+                        emp.message = "No Files Found";
+                    }
+                    else
+                    {
+                        emp.result = result;
+                        emp.Flag = ApplicationConstants.successFlag;
+                        emp.message = "Data Fetched Successfully!";
+                    }
+                }
+            
                 return emp;
             }
             catch (Exception ex)

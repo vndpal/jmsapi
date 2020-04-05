@@ -34,43 +34,42 @@ namespace JMS_API.Controllers
         //    return response;
         //}
 
-        //[HttpPost]
-        //[Route("EmployeeRegister1")]
-        //public async Task<IActionResult> EmployeeRegister1()
-        //{
-        //    try
-        //    {
-        //        var postvalues = HttpContext.Request.Form;
+        [HttpPost]
+        [Route("EmployeeRegister")]
+        public async Task<IActionResult> EmployeeRegister()
+        {
+            try
+            {
+                var postvalues = HttpContext.Request.Form;
 
-        //        if (HttpContext.Request.Form.Files.Count() == 0)
-        //        {
-        //            return BadRequest("No files Found");
-        //        }
-	//test
-        //        Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
-        //        foreach (var s in postvalues)
-        //        {
-        //            FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
-        //        }
+                if (HttpContext.Request.Form.Files.Count() == 0)
+                {
+                    return BadRequest("No files Found");
+                }
+                Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
+                foreach (var s in postvalues)
+                {
+                    FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
+                }
 
-        //        var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
+                var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
 
-        //        var empDetails = JsonConvert.DeserializeObject<EmployeeDto>(formDataJSON);
+                var empDetails = JsonConvert.DeserializeObject<EmployeeDto>(formDataJSON);
 
-        //        var files = HttpContext.Request.Form.Files;
+                var files = HttpContext.Request.Form.Files;
 
-                
-        //        IActionResult response = Unauthorized();
 
-        //        SingleReturnResult<string> newEmployee = await _emp.AddUpdateEmployee(empDetails, files);
-        //        response = Ok("data inserted succssul;e");
-        //        return response;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Ok();
-        //    }
-        //}
+                IActionResult response = Unauthorized();
+
+                SingleReturnResult<string> newEmployee = await _emp.AddUpdateEmployee(empDetails, files);
+                response = Ok(newEmployee);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Ok();
+            }
+        }
 
         [HttpGet]
         [Route("EmployeeDetails")]
@@ -90,6 +89,24 @@ namespace JMS_API.Controllers
             SingleReturnResult<EmployeeDto> employeeDetail = await _emp.GetEmployee(id);
             response = Ok(employeeDetail);
             return response;
+        }
+
+        [HttpGet]
+        [Route("getFiles")]
+        public async Task<IActionResult> getimages(string group,int refId, string type)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<FilesDto> fileDetails = await _emp.getFile(group,refId,type);
+            response = Ok(fileDetails);
+            //return response;
+            if(fileDetails.Flag == ApplicationConstants.successFlag)
+            {
+                return File(fileDetails.result.filedata, fileDetails.result.contentType);
+            }
+            else
+            {
+                return BadRequest("No such file found");
+            }
         }
 
     }
