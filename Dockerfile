@@ -1,5 +1,5 @@
 # NuGet restore
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /src
 COPY *.sln .
 COPY JMS-API/*.csproj JMS-API/
@@ -11,7 +11,7 @@ FROM build AS publish
 WORKDIR /src/JMS-API
 RUN dotnet publish -c Release -o /src/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
 WORKDIR /app
 COPY --from=publish /src/publish .
 # ENTRYPOINT ["dotnet", "Corona.API.dll"]
