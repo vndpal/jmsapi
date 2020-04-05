@@ -46,7 +46,7 @@ namespace JMS_API.Controllers
         //        {
         //            return BadRequest("No files Found");
         //        }
-	//testinfg
+	//test
         //        Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
         //        foreach (var s in postvalues)
         //        {
