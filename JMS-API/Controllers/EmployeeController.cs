@@ -101,11 +101,12 @@ namespace JMS_API.Controllers
             //return response;
             if(fileDetails.Flag == ApplicationConstants.successFlag)
             {
-                return File(fileDetails.result.filedata, fileDetails.result.contentType);
+                //return File(fileDetails.result.filedata, fileDetails.result.contentType);
+                return Ok(fileDetails);
             }
             else
             {
-                return BadRequest("No such file found");
+                return BadRequest(fileDetails);
             }
         }
 

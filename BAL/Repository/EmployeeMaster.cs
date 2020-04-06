@@ -27,12 +27,13 @@ namespace BLL.Repository
             try
             {
 
-                object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
+                object stat = _conn.ExecuteProcedure("InsertUpdateEmployeeMaster", new SqlParameter("EmpId", employeeDto.EmpId),
+                                                                                    new SqlParameter("DepartmentTypeId", employeeDto.DepartmentTypeId),
                                                                                     new SqlParameter("EmployeeTypeId", employeeDto.EmployeeTypeId),
                                                                                     new SqlParameter("FirstName", employeeDto.FirstName),
                                                                                     new SqlParameter("MiddleName", employeeDto.MiddleName),
                                                                                    new SqlParameter("LastName", employeeDto.LastName),
-                                                                                   new SqlParameter("EmailId", employeeDto.EmailId),
+                                                                                   new SqlParameter("EmailId", employeeDto.Email),
                                                                                   new SqlParameter("Address", employeeDto.Address),
                                                                                   new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
                                                                                  new SqlParameter("AddressProofId", employeeDto.AddressProofId),
@@ -51,6 +52,12 @@ namespace BLL.Repository
                     result.message = "Data Inserted Successfully";
                     result.result = "Ok";
 
+                    string operationType = "Update";
+                    if (employeeDto.EmpId == 0)
+                    {
+                        operationType = "Insert";
+                    }
+
                     foreach (var file in files)
                     {
                         if (file.Length > 0)
@@ -60,7 +67,8 @@ namespace BLL.Repository
                                 file.CopyTo(ms);
                                 var fileBytes = ms.ToArray();
 
-                        object sstat = _conn.ExecuteProcedure("UploadFileIntoDB", new SqlParameter("filedata", fileBytes)
+                        object sstat = _conn.ExecuteProcedure("UploadFileIntoDB", new SqlParameter("type", operationType)
+                                                                                , new SqlParameter("filedata", fileBytes)
                                                                                 , new SqlParameter("filetype", file.Name)
                                                                                 , new SqlParameter("filegroup", "Employee")
                                                                                 , new SqlParameter("refId", int.Parse(stat.ToString()))

@@ -21,7 +21,7 @@ namespace DTO.DTOModels
 
         public string LastName { get; set; }
 
-        public string EmailId { get; set; }
+        public string Email { get; set; }
 
         public string Address { get; set; }
 
