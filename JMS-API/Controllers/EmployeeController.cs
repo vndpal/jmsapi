@@ -81,7 +81,7 @@ namespace JMS_API.Controllers
             return response;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [Route("EmployeeDetail")]
         public async Task<IActionResult> EmployeeDetail(int id)
         {
