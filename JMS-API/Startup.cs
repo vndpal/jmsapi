@@ -53,7 +53,8 @@ namespace JMS_API
                 builder =>
                 {
                     builder.WithOrigins("http://example.com",
-                                        "http://localhost:3000").AllowAnyHeader()
+                                        "http://localhost:3000",
+                                        "http://yjpk.in").AllowAnyHeader()
                                 .AllowAnyMethod();
                 });
             });
