@@ -17,7 +17,7 @@ namespace BLL.Repository
         {
             _conn = con;
         }
-
+//test
         public async Task<SingleReturnResult<StockDto>> AddStock(StockDto stock)
         {
             SingleReturnResult<StockDto> result = new SingleReturnResult<StockDto>();
