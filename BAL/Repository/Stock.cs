@@ -63,7 +63,7 @@ namespace BLL.Repository
             StockDto stockDto = new StockDto();
             try
             {
-                var procResult = _conn.ExecuteProcedure("InsertUpdateStock", new SqlParameter("ProcType", "INSERT")
+                var procResult = _conn.ExecuteProcedure("InsertUpdateStock", new SqlParameter("ProcType", "UPDATE")
                                                                                  , new SqlParameter("StockId", stock.StockId)
                                                                                  , new SqlParameter("JobId", stock.JobId)
                                                                                  , new SqlParameter("StockDate", stock.StockDate)
