@@ -9,7 +9,7 @@ namespace DTO.DTOModels
         public int InvId { get; set; }
         public DateTime InvDate { get; set; }
         public int Company { get; set; }
-        public int MetalType { get; set; }
+        public string MetalType { get; set; }
         public float MetalWeight { get; set; }
         public int Hallmark { get; set; }
         public float Purity { get; set; }
