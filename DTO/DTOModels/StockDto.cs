@@ -12,6 +12,7 @@ namespace DTO.DTOModels
         public decimal StockWeight { get; set; }
         public decimal Purity { get; set; }
         public string Remark { get; set; }
+        public int ProcessStatus { get; set; }
         public DateTime AddedOn { get; set; }
         public int AddedBy { get; set; }
         public DateTime ModifiedOn { get; set; }

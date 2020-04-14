@@ -164,5 +164,38 @@ namespace BLL.Repository
                 return inv;
             }
         }
+
+        public async Task<SingleReturnResult<decimal>> GetTotalMaterialWeight()
+        {
+            SingleReturnResult<decimal> totalweight = new SingleReturnResult<decimal>();
+            try
+            {
+                string SqlQuery = "SELECT SUM(MetalWeight) MetailWeight FROM Inventory";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    totalweight.result = await connection.QueryFirstOrDefaultAsync<decimal>(SqlQuery);
+                }
+
+                if (totalweight.result > 0)
+                {
+                    totalweight.Flag = ApplicationConstants.successFlag;
+                    totalweight.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    totalweight.Flag = ApplicationConstants.failureFlag;
+                    totalweight.message = "No Records found !";
+                }
+                return totalweight;
+            }
+            catch (Exception ex)
+            {
+                totalweight.Flag = ApplicationConstants.failureFlag;
+                totalweight.message = ex.ToString();
+                return totalweight;
+            }
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace BLL.Repository
                                                                                 , new SqlParameter("StockWeight", stock.StockWeight)
                                                                                 , new SqlParameter("Purity ", stock.Purity)
                                                                                 , new SqlParameter("Remark", stock.Remark)
+                                                                                , new SqlParameter("SendToHR", stock.ProcessStatus)
                                                                                 , new SqlParameter("AddedBy", stock.AddedBy)
                                                                                 , new SqlParameter("ModifiedBy", stock.ModifiedBy));
 
@@ -70,6 +71,7 @@ namespace BLL.Repository
                                                                                  , new SqlParameter("StockWeight", stock.StockWeight)
                                                                                  , new SqlParameter("Purity ", stock.Purity)
                                                                                  , new SqlParameter("Remark", stock.Remark)
+                                                                                 , new SqlParameter("SendToHR", stock.ProcessStatus)
                                                                                  , new SqlParameter("AddedBy", stock.AddedBy)
                                                                                  , new SqlParameter("ModifiedBy", stock.ModifiedBy));
 
