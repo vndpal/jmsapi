@@ -33,7 +33,7 @@ namespace BLL.Repository
                                                                                     new SqlParameter("FirstName", employeeDto.FirstName),
                                                                                     new SqlParameter("MiddleName", employeeDto.MiddleName),
                                                                                    new SqlParameter("LastName", employeeDto.LastName),
-                                                                                   new SqlParameter("EmailId", employeeDto.Email),
+                                                                                   new SqlParameter("EmailId", employeeDto.Email    ),
                                                                                   new SqlParameter("Address", employeeDto.Address),
                                                                                   new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
                                                                                   new SqlParameter("ReferenceContact", employeeDto.ReferenceContact),

@@ -1,11 +1,13 @@
 ﻿using BLL.Interface;
 using Dapper;
 using DTO.DTOModels;
+using Microsoft.AspNetCore.Http;
 using Services.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +21,7 @@ namespace BLL.Repository
             _conn = conn;
         }
 
-        public async Task<SingleReturnResult<string>> AddUpdateJob(JobMasterDto job)
+        public async Task<SingleReturnResult<string>> AddUpdateJob(JobMasterDto job, IFormFileCollection files)
         {
             SingleReturnResult<string> result = new SingleReturnResult<string>();
             try
@@ -66,6 +68,7 @@ namespace BLL.Repository
                                                                                     new SqlParameter("JobType", job.JobType),
                                                                                     new SqlParameter("IssuedDate", job.IssuedDate),
                                                                                     new SqlParameter("DeliveryDate", job.DeliveryDate),
+                                                                                    new SqlParameter("DesignImage", "jobimage"),
                                                                                     new SqlParameter("WorkType", job.WorkType),
                                                                                     new SqlParameter("Remark", job.Remark),
                                                                                     new SqlParameter("ProcessStatus", job.ProcessStatus),
@@ -76,6 +79,33 @@ namespace BLL.Repository
                     result.Flag = ApplicationConstants.successFlag;
                     result.message = "Data Inserted Successfully";
                     result.result = "Ok";
+
+                    string operationType = "Update";
+                    if (job.JobId == 0)
+                    {
+                        operationType = "Insert";
+                    }
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                file.CopyTo(ms);
+                                var fileBytes = ms.ToArray();
+
+                                object sstat = _conn.ExecuteProcedure("UploadFileIntoDB", new SqlParameter("type", operationType)
+                                                                                        , new SqlParameter("filedata", fileBytes)
+                                                                                        , new SqlParameter("filetype", file.Name)
+                                                                                        , new SqlParameter("filegroup", "Job")
+                                                                                        , new SqlParameter("refId", int.Parse(stat.ToString()))
+                                                                                        , new SqlParameter("filename", file.FileName)
+                                                                                        , new SqlParameter("contentType", file.ContentType)
+                                                                                        , new SqlParameter("uploadedBy", 1));
+
+                            }
+                        }
+                    }
                 }
                 else
                 {
