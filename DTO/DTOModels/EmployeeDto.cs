@@ -27,6 +27,8 @@ namespace DTO.DTOModels
 
         public string ReferenceBy { get; set; }
 
+        public string ReferenceContact { get; set; }
+
         public int AddressProofId { get; set; }
 
         public int IdentityProofId { get; set; }

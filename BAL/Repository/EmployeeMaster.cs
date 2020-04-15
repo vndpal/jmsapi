@@ -36,6 +36,7 @@ namespace BLL.Repository
                                                                                    new SqlParameter("EmailId", employeeDto.Email),
                                                                                   new SqlParameter("Address", employeeDto.Address),
                                                                                   new SqlParameter("ReferenceBy", employeeDto.ReferenceBy),
+                                                                                  new SqlParameter("ReferenceContact", employeeDto.ReferenceContact),
                                                                                  new SqlParameter("AddressProofId", employeeDto.AddressProofId),
                                                                                  new SqlParameter("IdentityProofId", employeeDto.IdentityProofId),
                                                                                  new SqlParameter("AddressProof", "addrewsspo"),
