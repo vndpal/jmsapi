@@ -7,6 +7,7 @@ using BLL.Repository;
 using DTO.DTOModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -22,14 +23,51 @@ namespace API.Controllers
 
         // public ICompanyMaster _Comp { get; }
 
+        //[HttpPost]
+        //[Route("JobRegister")]
+        //public async Task<IActionResult> JobRegistration([FromBody]JobMasterDto jobDetails)
+        //{
+        //    IActionResult response = Unauthorized();
+        //    SingleReturnResult<string> newJobDetails = await _job.AddUpdateJob(jobDetails);
+        //    response = Ok(newJobDetails);
+        //    return response;
+        //}
+
         [HttpPost]
         [Route("JobRegister")]
-        public async Task<IActionResult> JobRegistration([FromBody]JobMasterDto jobDetails)
+        public async Task<IActionResult> JobRegistration()
         {
-            IActionResult response = Unauthorized();
-            SingleReturnResult<string> newJobDetails = await _job.AddUpdateJob(jobDetails);
-            response = Ok(newJobDetails);
-            return response;
+            try
+            {
+                var postvalues = HttpContext.Request.Form;
+
+                if (HttpContext.Request.Form.Files.Count() == 0)
+                {
+                    return BadRequest("No files Found");
+                }
+                Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
+                foreach (var s in postvalues)
+                {
+                    FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
+                }
+
+                var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
+
+                var jobDetails = JsonConvert.DeserializeObject<JobMasterDto>(formDataJSON);
+
+                var files = HttpContext.Request.Form.Files;
+
+
+                IActionResult response = Unauthorized();
+
+                SingleReturnResult<string> newJob = await _job.AddUpdateJob(jobDetails, files);
+                response = Ok(newJob);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Ok();
+            }
         }
 
         [HttpGet]
