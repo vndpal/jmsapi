@@ -19,21 +19,24 @@ namespace BLL.Repository
             _conn = conn;
         }
 
-        public async Task<SingleReturnResult<string>> AddUpdateHR(List<HRDepartmentDto> hr)
+        public async Task<SingleReturnResult<string>> AddHR(HRDepartmentDto hr)
         {
 
             SingleReturnResult<string> result = new SingleReturnResult<string>();
             try
             {
-                //string result = "";
-                DataTable dtHRDept = _conn.ToDataTable(hr);
-                dtHRDept.Columns.Remove("JobNo");
-                dtHRDept.Columns.Remove("Department");
-                dtHRDept.Columns.Remove("Employee");
 
-        object stat = _conn.ExecuteProcedure("InsertUpdateHRDepartment", new SqlParameter("HRDepartment", dtHRDept));
-                                                                                   
-                if (stat != null)
+
+                var procResult = _conn.ExecuteProcedure("InsertUpdateHRDepartment", new SqlParameter("ProcType", "INSERT")
+                                                                               , new SqlParameter("JobId", hr.JobId)
+                                                                               , new SqlParameter("DepartmentId", hr.DepartmentId)
+                                                                               , new SqlParameter("EmployeeId", hr.EmployeeId)
+                                                                               , new SqlParameter("IssuedDate ", hr.IssuedDate)
+                                                                               , new SqlParameter("IssuedWeight", hr.IssuedWeight)
+                                                                               , new SqlParameter("Remark", hr.Remark));
+                                                                         
+
+                if (procResult != null)
                 {
                     result.Flag = ApplicationConstants.successFlag;
                     result.message = "Data Inserted Successfully";
@@ -56,17 +59,17 @@ namespace BLL.Repository
             }
         }
 
-        public async Task<ListReturnResult<JobMasterDto>> GetHRAssignedJob()
+        public async Task<ListReturnResult<AssignedJobDTO>> GetHRAssignedJob()
         {
-            ListReturnResult<JobMasterDto> hr = new ListReturnResult<JobMasterDto>();
+            ListReturnResult<AssignedJobDTO> hr = new ListReturnResult<AssignedJobDTO>();
             try
             {
-                string SqlQuery = "SELECT JobId,JobNo FROM JobMaster WHERE ProcessStatus = 0";
-
+                string SqlQuery = "GetAssignedJob";
+                var values = new { StatusId = 1 };
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
-                    hr.result = connection.Query<JobMasterDto>(SqlQuery).AsList();
+                    hr.result = connection.Query<AssignedJobDTO>(SqlQuery,values,commandType:CommandType.StoredProcedure).AsList();
                 }
                 hr.Flag = ApplicationConstants.successFlag;
                 hr.message = "Data Fetched successfully";

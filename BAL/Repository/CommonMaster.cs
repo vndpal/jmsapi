@@ -41,12 +41,12 @@ namespace BLL.Repository
             return commonResult;
         }
         
-          public async Task<ListReturnResult<JobMasterDto>> getJobMaster()
+        public async Task<ListReturnResult<JobMasterDto>> getJobMaster()
         {
             ListReturnResult<JobMasterDto> jobData = new ListReturnResult<JobMasterDto>();
             try
             {
-                string sqlQuery = "select JobId , JobNo ,ClientJobNo from JobMaster";
+                string sqlQuery = "select JobId , JobNo ,ClientJobNo from JobMaster WHERE ProcessStatus = 0";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {

@@ -22,10 +22,10 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("AddHRJobs")]
-        public async Task<IActionResult> AddHRJobs([FromBody]List<HRDepartmentDto> hrDetails)
+        public async Task<IActionResult> AddHRJobs([FromBody]HRDepartmentDto hrDetails)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<string> newHrDetails = await _hr.AddUpdateHR(hrDetails);
+            SingleReturnResult<string> newHrDetails = await _hr.AddHR(hrDetails);
             response = Ok(newHrDetails);
             return response;
         }
@@ -45,7 +45,7 @@ namespace API.Controllers
         public async Task<IActionResult> JobForHR()
         {
             IActionResult response = Unauthorized();
-            ListReturnResult<JobMasterDto> hrDetails = await _hr.GetHRAssignedJob();
+            ListReturnResult<AssignedJobDTO> hrDetails = await _hr.GetHRAssignedJob();
             response = Ok(hrDetails);
             return response;
         }
