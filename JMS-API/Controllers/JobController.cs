@@ -46,15 +46,21 @@ namespace API.Controllers
                     return BadRequest("No files Found");
                 }
                 Dictionary<object, object> FormDataKeyValue = new Dictionary<object, object>();
+                Dictionary<object, object> DiamondFormDataKeyValue = new Dictionary<object, object>();
                 foreach (var s in postvalues)
                 {
-                    FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
+                    if (s.Key != "diamondDetail")
+                    {
+                        FormDataKeyValue.Add(s.Key.ToString(), postvalues[s.Key].ToString());
+                    }
                 }
+
 
                 var formDataJSON = JsonConvert.SerializeObject(FormDataKeyValue);
 
                 var jobDetails = JsonConvert.DeserializeObject<JobMasterDto>(formDataJSON);
-
+                var diamandDetails = JsonConvert.DeserializeObject<List<DiamondDetailDto>>(postvalues["diamondDetail"]);
+                jobDetails.diamondDetail = diamandDetails;
                 var files = HttpContext.Request.Form.Files;
 
 
@@ -66,7 +72,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(ex.Tostring());
+                return Ok(ex.ToString());
             }
         }
 
