@@ -65,7 +65,7 @@ namespace BLL.Repository
             try
             {
                 string SqlQuery = "GetAssignedJob";
-                var values = new { StatusId = 1 };
+                var values = new { StatusId = 2 };
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
