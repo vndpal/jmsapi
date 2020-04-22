@@ -13,5 +13,7 @@ namespace DTO.DTOModels
         public decimal StockWeight { get; set; }
         public int HallmarkId { get; set; }
         public string Hallmark { get; set; }
+        public string Employee { get; set; }
+
     }
 }

@@ -20,10 +20,21 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("AddFilling")]
-        public async Task<IActionResult> AddFilling([FromBody]List<FillingDepartmentDto> filling)
+        public async Task<IActionResult> AddFilling([FromBody]FillingDepartmentDto filling)
         {
             IActionResult response = Unauthorized();
             SingleReturnResult<string> newfilling = await _filling.AddFilling(filling);
+            response = Ok(newfilling);
+            return response;
+        }
+
+
+        [HttpPost]
+        [Route("UpdateFilling")]
+        public async Task<IActionResult> UpdateFilling([FromBody]FillingDepartmentDto filling)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<string> newfilling = await _filling.UpdateFilling(filling);
             response = Ok(newfilling);
             return response;
         }
@@ -33,18 +44,28 @@ namespace API.Controllers
         public async Task<IActionResult> FillingDetails()
         {
             IActionResult response = Unauthorized();
-            ListReturnResult<FillingDepartmentDto> fillingDetails = await _filling.GetAllFilling();
+            ListReturnResult<FillingDepartmentDto> fillingDetails = await _filling.GetFillingJobs();
             response = Ok(fillingDetails);
             return response;
         }
 
-        [HttpGet("{id}")]
-        [Route("FillingDetail")]
-        public async Task<IActionResult> FillingDetail(int id)
+        [HttpGet]
+        [Route("FillingJobById")]
+        public async Task<IActionResult> FillingJobById(int id)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<FillingDepartmentDto> fillingDetail = await _filling.GetFilling(id);
+            SingleReturnResult<FillingDepartmentDto> fillingDetail = await _filling.GetFillingJobWithId(id);
             response = Ok(fillingDetail);
+            return response;
+        }
+
+        [HttpGet]
+        [Route("JobForFilling")]
+        public async Task<IActionResult> JobForFilling()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<AssignedJobDTO> hrDetails = await _filling.GetFillingAssignedJob();
+            response = Ok(hrDetails);
             return response;
         }
     }

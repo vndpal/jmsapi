@@ -8,8 +8,10 @@ namespace BLL.Interface
 {
     public interface IFillingDepartment
     {
-        Task<SingleReturnResult<string>> AddFilling(List<FillingDepartmentDto> filling);
-        Task<ListReturnResult<FillingDepartmentDto>> GetAllFilling();
-        Task<SingleReturnResult<FillingDepartmentDto>> GetFilling(int Id);
+        Task<SingleReturnResult<string>> AddFilling(FillingDepartmentDto filling);
+        Task<SingleReturnResult<string>> UpdateFilling(FillingDepartmentDto filling);
+        Task<ListReturnResult<FillingDepartmentDto>> GetFillingJobs();
+        Task<SingleReturnResult<FillingDepartmentDto>> GetFillingJobWithId(int Id);
+        Task<ListReturnResult<AssignedJobDTO>> GetFillingAssignedJob();
     }
 }
