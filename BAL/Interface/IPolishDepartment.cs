@@ -8,8 +8,10 @@ namespace BLL.Interface
 {
     public interface IPolishDepartment
     {
-        Task<SingleReturnResult<string>> AddPolish(List<PolishDepartmentDto> polish);
-        Task<ListReturnResult<PolishDepartmentDto>> GetAllPolish();
-        Task<SingleReturnResult<PolishDepartmentDto>> GetPolish(int Id);
+        Task<SingleReturnResult<string>> AddPolish(PolishDepartmentDto polish);
+        Task<SingleReturnResult<string>> UpdatePolish(PolishDepartmentDto polish);
+        Task<ListReturnResult<PolishDepartmentDto>> GetPolishJobs();
+        Task<SingleReturnResult<PolishDepartmentDto>> GetPolishJobWithId(int Id);
+        Task<ListReturnResult<AssignedJobDTO>> GetPolishAssignedJob();
     }
 }
