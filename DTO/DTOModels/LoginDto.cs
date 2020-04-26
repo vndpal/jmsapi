@@ -6,10 +6,7 @@ namespace DTO.DTOModels
 {
     public class LoginDto
     {
-        public string username { get; set; }
-        public string password { get; set; }
-        public string email { get; set; }
-        public string mobile { get; set; }
-        public string role { get; set; }
+        public string EmailId { get; set; }
+        public string Password { get; set; }
     }
 }

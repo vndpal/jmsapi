@@ -25,7 +25,8 @@ namespace Services.Entities
         }
         public string strConnectionString()
         {
-            return "Data Source =103.21.58.193;initial catalog=JMSDB;User Id=jms1234;Password=Aa@00123;";
+           return "Data Source =103.21.58.193;initial catalog=JMSDB;User Id=jms1234;Password=Aa@00123;";
+            //return "Data Source =JMSDBTest.mssql.somee.com;initial catalog=JMSDBTest;User Id=jmsdb;Password=Aa@00123;";
             //return "Data Source =LAPTOP-L7469IMM;initial catalog=JMSDB;persist security info=True;Integrated Security=SSPI;";
         }
         public bool openConnection()

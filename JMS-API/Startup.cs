@@ -74,8 +74,8 @@ namespace JMS_API
             services.AddScoped<IFillingDepartment, FillingDepartment>();
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IStock, Stock>();
-            services.AddScoped<ILoginMaster, LoginMaster>();
             services.AddScoped<ICommonMaster, CommonMaster>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
