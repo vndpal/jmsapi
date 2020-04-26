@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Entities
 {
@@ -15,7 +16,7 @@ namespace Services.Entities
         object ExecuteProcedure(string procName, params SqlParameter[] parameters);
         object ExecuteProcedureWithOpenConnection(string procName, params SqlParameter[] parameters);
         int ExecuteNonQuery(string query);
-        DataTable ExecuteProcedureForDataTable(string procName, params SqlParameter[] parameters);
+        Task<DataTable> ExecuteProcedureForDataTable(string procName, params SqlParameter[] parameters);
         DataSet ExecuteProcedureForDataSet(string procName, params SqlParameter[] parameters);
         DataTable ToDataTable<T>(List<T> items);
         List<T> ConvertDataTable<T>(DataTable dt);

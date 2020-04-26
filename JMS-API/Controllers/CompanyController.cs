@@ -44,10 +44,10 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
       //  [Route("CompanyDetailsById")]
-        public IActionResult CompanyDetail(int id)
+        public async Task<IActionResult> CompanyDetail(int id)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<CompanyMasterDto> companyDetail = _comp.GetCompany(id);
+            SingleReturnResult<CompanyMasterDto> companyDetail = await _comp.GetCompany(id);
             response = Ok(companyDetail);
             return response;
         }

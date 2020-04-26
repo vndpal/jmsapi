@@ -177,5 +177,41 @@ namespace BLL.Repository
                 return job;
             }
         }
+
+        public async Task<ListReturnResult<TrackiJobDto>> TrackJob(int JobId)
+        {
+            ListReturnResult<TrackiJobDto> Jobhistory = new ListReturnResult<TrackiJobDto>();
+            try
+            {
+                DataTable dsJob = await _conn.ExecuteProcedureForDataTable("TrackJob", new SqlParameter("JobId", JobId));
+                List<TrackiJobDto> jobDetail = new List<TrackiJobDto>();
+
+                jobDetail =  _conn.ConvertDataTable<TrackiJobDto>(dsJob);
+
+                TrackiJobDto td = new TrackiJobDto();
+                td.crtDate = DateTime.Now;
+                td.Department = "Test Department";
+                td.EmployeeCode = "EMP-01";
+                td.EmployeeId = 1;
+                td.EmployeeName = "test test test";
+                td.IssueDate = DateTime.Now;
+                td.IssueWeight = 10;
+                td.JobId = 1;
+                td.StatusId = 10;
+                jobDetail.Add(td);
+
+                Jobhistory.result = jobDetail;
+                Jobhistory.Flag = ApplicationConstants.successFlag;
+                Jobhistory.message = "Data Fetched Successfully!";
+
+                return Jobhistory;
+            }
+            catch (Exception ex)
+            {
+                Jobhistory.Flag = ApplicationConstants.failureFlag;
+                Jobhistory.message = ex.ToString();
+                return Jobhistory;
+            }
+        }
     }
 }

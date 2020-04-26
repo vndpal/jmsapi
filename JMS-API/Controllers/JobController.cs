@@ -105,5 +105,15 @@ namespace API.Controllers
         //    response = Ok(companyDetail);
         //    return response;
         //}
+
+        [HttpGet("{JobId}")]
+        [Route("TrackJob")]
+        public async Task<IActionResult> TrackJob(int JobId)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<TrackiJobDto> jobDetail = await _job.TrackJob(JobId);
+            response = Ok(jobDetail);
+            return response;
+        }
     }
 }

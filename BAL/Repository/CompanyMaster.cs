@@ -91,12 +91,12 @@ namespace BLL.Repository
 
         }
 
-        public SingleReturnResult<CompanyMasterDto> GetCompany(int Id)
+        public async Task<SingleReturnResult<CompanyMasterDto>> GetCompany(int Id)
         {
             SingleReturnResult<CompanyMasterDto> comp = new SingleReturnResult<CompanyMasterDto>();
             try
             {
-                DataTable dtComp = _conn.ExecuteProcedureForDataTable("GetCompanyById", new SqlParameter("CompanyId", Id));
+                DataTable dtComp = await _conn.ExecuteProcedureForDataTable("GetCompanyById", new SqlParameter("CompanyId", Id));
 
                
                 string companyType = dtComp.Rows[0]["CompanyType"].ToString();
