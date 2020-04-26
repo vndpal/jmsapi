@@ -6,6 +6,7 @@ namespace DTO.DTOModels
 {
     public class HRDepartmentDto
     {
+        public int HRId { get; set; }
         public int JobId { get; set; }
         public string JobNo { get; set; }
         public int DepartmentId { get; set; }

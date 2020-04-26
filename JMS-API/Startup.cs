@@ -72,6 +72,7 @@ namespace JMS_API
             services.AddScoped<IWAXDepartment, WAXDepartment>();
             services.AddScoped<IPolishDepartment, PolishDepartment>();
             services.AddScoped<IFillingDepartment, FillingDepartment>();
+            services.AddScoped<ISettingDepartment, SettingDepartment>();
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IStock, Stock>();
             services.AddScoped<ICommonMaster, CommonMaster>();

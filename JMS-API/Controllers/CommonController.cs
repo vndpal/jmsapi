@@ -29,5 +29,15 @@ namespace API.Controllers
             response = Ok(commonDetail);
             return response;
         }
+
+        [HttpGet]
+        [Route("getJobMaster")]
+        public async Task<IActionResult> GetJobMaster()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<JobMasterDto> jobData = await _common.getJobMaster();
+            response = Ok(jobData);
+            return response;
+        }
     }
 }

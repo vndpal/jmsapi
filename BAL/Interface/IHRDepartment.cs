@@ -8,8 +8,8 @@ namespace BLL.Interface
 {
      public interface IHRDepartment
     {
-        Task<ListReturnResult<JobMasterDto>> GetHRAssignedJob();
+        Task<SingleReturnResult<string>> AddHR(HRDepartmentDto hr);
+        Task<ListReturnResult<AssignedJobDTO>> GetHRAssignedJob();
         Task<ListReturnResult<HRDepartmentDto>> GetHRDepartmentJobs();
-        Task<SingleReturnResult<string>> AddUpdateHR(List<HRDepartmentDto> hr);
     }
 }

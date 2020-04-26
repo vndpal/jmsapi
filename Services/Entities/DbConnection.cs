@@ -144,7 +144,7 @@ namespace Services.Entities
             }
             finally { closeConnection(); }
         }
-        public DataTable ExecuteProcedureForDataTable(string procName, params SqlParameter[] parameters)
+        public async Task<DataTable> ExecuteProcedureForDataTable(string procName, params SqlParameter[] parameters)
         {
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand();
@@ -158,7 +158,7 @@ namespace Services.Entities
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddRange(parameters);
                     adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(dt);
+                    await Task.Run(()=>adapter.Fill(dt));
                 }
                 return dt;
             }

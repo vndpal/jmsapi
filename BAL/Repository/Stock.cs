@@ -29,8 +29,10 @@ namespace BLL.Repository
                                                                                 , new SqlParameter("JobId", stock.JobId)
                                                                                 , new SqlParameter("StockDate", stock.StockDate)
                                                                                 , new SqlParameter("StockWeight", stock.StockWeight)
-                                                                                , new SqlParameter("Purity ", stock.Purity)
+                                                                                , new SqlParameter("Purity", stock.Purity)
+                                                                                , new SqlParameter("Hallmark", stock.Hallmark)
                                                                                 , new SqlParameter("Remark", stock.Remark)
+                                                                                , new SqlParameter("SendToHR", stock.ProcessStatus)
                                                                                 , new SqlParameter("AddedBy", stock.AddedBy)
                                                                                 , new SqlParameter("ModifiedBy", stock.ModifiedBy));
 
@@ -68,8 +70,10 @@ namespace BLL.Repository
                                                                                  , new SqlParameter("JobId", stock.JobId)
                                                                                  , new SqlParameter("StockDate", stock.StockDate)
                                                                                  , new SqlParameter("StockWeight", stock.StockWeight)
-                                                                                 , new SqlParameter("Purity ", stock.Purity)
+                                                                                 , new SqlParameter("Purity", stock.Purity)
+                                                                                 , new SqlParameter("Hallmark", stock.Hallmark)
                                                                                  , new SqlParameter("Remark", stock.Remark)
+                                                                                 , new SqlParameter("SendToHR", stock.ProcessStatus)
                                                                                  , new SqlParameter("AddedBy", stock.AddedBy)
                                                                                  , new SqlParameter("ModifiedBy", stock.ModifiedBy));
 
@@ -133,7 +137,7 @@ namespace BLL.Repository
             SingleReturnResult<StockDto> stock = new SingleReturnResult<StockDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM Stock WHERE StockId = @StockId";
+                string SqlQuery = "SELECT s.*,j.ProcessStatus FROM Stock s join jobmaster j on s.jobid=j.jobid WHERE s.StockId = @StockId";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {

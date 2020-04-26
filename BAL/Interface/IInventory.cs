@@ -12,5 +12,6 @@ namespace BLL.Interface
         Task<SingleReturnResult<InventoryDto>> UpdateInventory(InventoryDto inventory);
         Task<ListReturnResult<InventoryDto>> GetInventoryList();
         Task<SingleReturnResult<InventoryDto>> GetInventoryById(int id);
+        Task<SingleReturnResult<decimal>> GetTotalMaterialWeight();
     }
 }

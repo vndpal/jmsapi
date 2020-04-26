@@ -58,5 +58,16 @@ namespace API.Controllers
             response = Ok(result);
             return response;
         }
+
+        [HttpGet]
+        [Route("GetTotalWeight")]
+        public async Task<IActionResult> GetTotalWeight()
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<decimal> result = await _inventory.GetTotalMaterialWeight();
+            response = Ok(result);
+            return response;
+        }
+
     }
 }

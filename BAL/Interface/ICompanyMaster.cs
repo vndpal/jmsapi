@@ -10,7 +10,7 @@ namespace BLL.Interface
     {
        Task<SingleReturnResult<string>> AddCompany(CompanyMasterDto comp);
        Task<ListReturnResult<CompanyMasterDto>> GetAllCompany();
-       SingleReturnResult<CompanyMasterDto> GetCompany(int Id);
+       Task<SingleReturnResult<CompanyMasterDto>> GetCompany(int Id);
         Task<SingleReturnResult<string>> UpdateCompany(CompanyMasterDto comp);
     }
 }
