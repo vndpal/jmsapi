@@ -188,5 +188,31 @@ namespace BLL.Repository
             }
         }
 
+        public async Task<ListReturnResult<DiamondDetailDto>> GetStoneForFitter(int Id)
+        {
+            ListReturnResult<DiamondDetailDto> set = new ListReturnResult<DiamondDetailDto>();
+            try
+            {
+                string SqlQuery = "GetStoneForFitter";
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    set.result = connection.Query<DiamondDetailDto>(SqlQuery,new {JobId = Id }, commandType: CommandType.StoredProcedure).AsList();
+
+                }
+                set.Flag = ApplicationConstants.successFlag;
+                set.message = "Data Fetched Successfully";
+                return set;
+
+
+            }
+            catch (Exception ex)
+            {
+                set.Flag = ApplicationConstants.failureFlag;
+                set.message = ex.ToString();
+                return set;
+            }
+        }
+
     }
 }

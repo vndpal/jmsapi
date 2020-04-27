@@ -68,5 +68,16 @@ namespace API.Controllers
             return response;
         }
 
+
+        [HttpGet]
+        [Route("StoneByJobId")]
+        public async Task<IActionResult> GetStoneByJobId(int id)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<DiamondDetailDto> setDetail =await _set.GetStoneForFitter(id);
+            response = Ok(setDetail);
+            return response;
+        }
+
     }
 }

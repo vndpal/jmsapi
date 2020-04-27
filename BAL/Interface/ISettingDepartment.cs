@@ -13,5 +13,6 @@ namespace BLL.Interface
         Task<ListReturnResult<SettingDepartmentDto>> GetSettingJobs();
         SingleReturnResult<SettingDepartmentDto> GetSettingJobWithId(int Id);
         Task<ListReturnResult<AssignedJobDTO>> GetSettingAssignedJob();
+        Task<ListReturnResult<DiamondDetailDto>> GetStoneForFitter(int Id);
     }
 }
