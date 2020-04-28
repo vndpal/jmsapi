@@ -27,6 +27,12 @@ namespace BLL.Repository
             {
                 //string result = "";
                 DataTable dtSetDept = _conn.ToDataTable(set.SetDiamond);
+                dtSetDept.Columns.Remove("DiamondDate");
+                dtSetDept.Columns.Remove("DiamondType");
+                dtSetDept.Columns.Remove("DiamondTypeValue");
+                dtSetDept.Columns.Remove("IssuedPiece");
+                dtSetDept.Columns.Remove("IssuedWeight");
+                dtSetDept.Columns.Remove("SettingId");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateSetDepartment", new SqlParameter("ProcType", "INSERT"),
                                                                                   new SqlParameter("SettingId", 0),
@@ -72,6 +78,12 @@ namespace BLL.Repository
             {
                 //string result = "";
                 DataTable dtSetDept = _conn.ToDataTable(set.SetDiamond);
+                dtSetDept.Columns.Remove("DiamondDate");
+                dtSetDept.Columns.Remove("DiamondType");
+                dtSetDept.Columns.Remove("DiamondTypeValue");
+                dtSetDept.Columns.Remove("IssuedPiece");
+                dtSetDept.Columns.Remove("IssuedWeight");
+                dtSetDept.Columns.Remove("SettingId");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateSetDepartment", new SqlParameter("ProcType", "Update"),
                                                                                   new SqlParameter("SettingId", set.SettingId),
