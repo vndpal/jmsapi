@@ -4,6 +4,7 @@ using DTO.DTOModels;
 using Services.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
@@ -195,6 +196,39 @@ namespace BLL.Repository
                 totalweight.Flag = ApplicationConstants.failureFlag;
                 totalweight.message = ex.ToString();
                 return totalweight;
+            }
+        }
+
+        public async Task<ListReturnResult<InventoryReportDto>> GetInventoryReport(int companyId , string fromDate , string toDate)
+        {
+            ListReturnResult<InventoryReportDto> inv = new ListReturnResult<InventoryReportDto>();
+            try
+            {
+                string SqlQuery = "GetInventoryReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    inv.result = connection.Query<InventoryReportDto>(SqlQuery, new { CompanyId = companyId,FromDate =fromDate,ToDate = toDate }, commandType : CommandType.StoredProcedure).AsList();
+                }
+
+                if (inv.result != null)
+                {
+                    inv.Flag = ApplicationConstants.successFlag;
+                    inv.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    inv.Flag = ApplicationConstants.failureFlag;
+                    inv.message = "No Records found !";
+                }
+                return inv;
+            }
+            catch (Exception ex)
+            {
+                inv.Flag = ApplicationConstants.failureFlag;
+                inv.message = ex.ToString();
+                return inv;
             }
         }
     }
