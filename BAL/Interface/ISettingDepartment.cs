@@ -11,7 +11,7 @@ namespace BLL.Interface
         Task<SingleReturnResult<string>> AddSetting(SettingDepartmentDto set);
         Task<SingleReturnResult<string>> UpdateSetting(SettingDepartmentDto set);
         Task<ListReturnResult<SettingDepartmentDto>> GetSettingJobs();
-        SingleReturnResult<SettingDepartmentDto> GetSettingJobWithId(int Id);
+        Task<SingleReturnResult<SettingDepartmentDto>> GetSettingJobWithId(int Id);
         Task<ListReturnResult<AssignedJobDTO>> GetSettingAssignedJob();
         Task<ListReturnResult<DiamondDetailDto>> GetStoneForFitter(int Id);
     }

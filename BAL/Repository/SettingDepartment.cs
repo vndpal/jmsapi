@@ -147,14 +147,14 @@ namespace BLL.Repository
             }
         }
 
-        public SingleReturnResult<SettingDepartmentDto> GetSettingJobWithId(int Id)
+        public async Task<SingleReturnResult<SettingDepartmentDto>> GetSettingJobWithId(int Id)
         {
             
             SingleReturnResult<SettingDepartmentDto> set = new SingleReturnResult<SettingDepartmentDto>();
             List<SettingDepartmentDto> tempset = new List<SettingDepartmentDto>();
             try
             {
-                DataSet dsSetting = _conn.ExecuteProcedureForDataSet("GetSetting",new SqlParameter("SettingId",Id));
+                DataSet dsSetting = await _conn.ExecuteProcedureForDataSet("GetSetting",new SqlParameter("SettingId",Id));
                 tempset = _conn.ConvertDataTable<SettingDepartmentDto>(dsSetting.Tables[0]);
                 if (dsSetting.Tables[1].Rows.Count > 0)
                 {

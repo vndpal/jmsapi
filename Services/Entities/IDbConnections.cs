@@ -17,7 +17,7 @@ namespace Services.Entities
         object ExecuteProcedureWithOpenConnection(string procName, params SqlParameter[] parameters);
         int ExecuteNonQuery(string query);
         Task<DataTable> ExecuteProcedureForDataTable(string procName, params SqlParameter[] parameters);
-        DataSet ExecuteProcedureForDataSet(string procName, params SqlParameter[] parameters);
+        Task<DataSet> ExecuteProcedureForDataSet(string procName, params SqlParameter[] parameters);
         DataTable ToDataTable<T>(List<T> items);
         List<T> ConvertDataTable<T>(DataTable dt);
         T GetItem<T>(DataRow dr);

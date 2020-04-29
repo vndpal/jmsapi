@@ -50,10 +50,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("SettingJobById")]
-        public  IActionResult GetSettingJobWithId(int id)
+        public async Task<IActionResult> GetSettingJobWithId(int id)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<SettingDepartmentDto> setDetail = _set.GetSettingJobWithId(id);
+            SingleReturnResult<SettingDepartmentDto> setDetail = await _set.GetSettingJobWithId(id);
             response = Ok(setDetail);
             return response;
         }

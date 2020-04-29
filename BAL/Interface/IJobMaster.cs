@@ -12,7 +12,7 @@ namespace BLL.Interface
         Task<SingleReturnResult<string>> AddUpdateJob(JobMasterDto job, IFormFileCollection files);
         Task<ListReturnResult<JobMasterDto>> GetAllJob();
         Task<SingleReturnResult<JobMasterDto>> GetJob(int Id);
-        Task<ListReturnResult<TrackiJobDto>> TrackJob(int JobId);
+       // Task<ListReturnResult<TrackJobDto>> TrackJob(int JobId);
        // Task<SingleReturnResult<JobMasterDto>> updateJob(JobMasterDto jobDetails);
     }
 }

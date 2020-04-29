@@ -39,5 +39,15 @@ namespace API.Controllers
             response = Ok(jobData);
             return response;
         }
+
+        [HttpGet]
+        [Route("getJobHistory")]
+        public async Task<IActionResult> GetJobHistory(string department , int jobId)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<TrackJobDto> trackJob = await _common.TrackJob(department,jobId);
+            response = Ok(trackJob);
+            return response;
+        }
     }
 }
