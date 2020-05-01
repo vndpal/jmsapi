@@ -169,7 +169,7 @@ namespace Services.Entities
             }
             finally { closeConnection(); }
         }
-        public DataSet ExecuteProcedureForDataSet(string procName, params SqlParameter[] parameters)
+        public async Task<DataSet> ExecuteProcedureForDataSet(string procName, params SqlParameter[] parameters)
         {
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
@@ -183,7 +183,7 @@ namespace Services.Entities
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddRange(parameters);
                     adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(ds);
+                    await Task.Run(() => adapter.Fill(ds));
                 }
                 return ds;
             }

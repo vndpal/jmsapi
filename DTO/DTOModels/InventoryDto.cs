@@ -19,4 +19,14 @@ namespace DTO.DTOModels
         public DateTime ModifiedOn { get; set; }
         public int ModifiedBy { get; set; }
     }
+
+    public class InventoryReportDto
+    {
+        public DateTime InvDate { get; set; }
+        public string CompanyName { get; set; }
+        public decimal InsertedWeight { get; set; }
+        public decimal DeductedWeight { get; set; }
+        public float Purity { get; set; }
+        public string Remark { get; set; }
+    }
 }

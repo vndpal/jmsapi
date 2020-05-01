@@ -3,6 +3,7 @@ using Dapper;
 using DTO.DTOModels;
 using Services.Entities;
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -63,6 +64,30 @@ namespace BLL.Repository
                 jobData.message = "Some error has occured while fetching the data" + ex.ToString();
             }
             return jobData;
+        }
+
+        public async Task<ListReturnResult<TrackJobDto>> TrackJob(string department , int jobId)
+        {
+            ListReturnResult<TrackJobDto> trackJob = new ListReturnResult<TrackJobDto>();
+            try
+            {
+                string sqlQuery = "GetJobHistory";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    trackJob.result = connection.Query<TrackJobDto>(sqlQuery , new { Department = department , JobId = jobId},commandType:CommandType.StoredProcedure).AsList();
+                }
+
+                trackJob.Flag = ApplicationConstants.successFlag;
+                trackJob.message = "Data fetched Successfully !";
+            }
+            catch (Exception ex)
+            {
+                trackJob.Flag = ApplicationConstants.failureFlag;
+                trackJob.message = "Some error has occured while fetching the data" + ex.ToString();
+            }
+            return trackJob;
         }
     }
 }

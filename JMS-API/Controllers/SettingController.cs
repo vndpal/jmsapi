@@ -50,10 +50,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("SettingJobById")]
-        public  IActionResult GetSettingJobWithId(int id)
+        public async Task<IActionResult> GetSettingJobWithId(int id)
         {
             IActionResult response = Unauthorized();
-            SingleReturnResult<SettingDepartmentDto> setDetail = _set.GetSettingJobWithId(id);
+            SingleReturnResult<SettingDepartmentDto> setDetail = await _set.GetSettingJobWithId(id);
             response = Ok(setDetail);
             return response;
         }
@@ -65,6 +65,17 @@ namespace API.Controllers
             IActionResult response = Unauthorized();
             ListReturnResult<AssignedJobDTO> setDetails = await _set.GetSettingAssignedJob();
             response = Ok(setDetails);
+            return response;
+        }
+
+
+        [HttpGet]
+        [Route("StoneByJobId")]
+        public async Task<IActionResult> GetStoneByJobId(int id)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<DiamondDetailDto> setDetail =await _set.GetStoneForFitter(id);
+            response = Ok(setDetail);
             return response;
         }
 

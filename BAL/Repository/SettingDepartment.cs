@@ -27,6 +27,12 @@ namespace BLL.Repository
             {
                 //string result = "";
                 DataTable dtSetDept = _conn.ToDataTable(set.SetDiamond);
+                dtSetDept.Columns.Remove("DiamondDate");
+                dtSetDept.Columns.Remove("DiamondType");
+                dtSetDept.Columns.Remove("DiamondTypeValue");
+                dtSetDept.Columns.Remove("IssuedPiece");
+                dtSetDept.Columns.Remove("IssuedWeight");
+                dtSetDept.Columns.Remove("SettingId");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateSetDepartment", new SqlParameter("ProcType", "INSERT"),
                                                                                   new SqlParameter("SettingId", 0),
@@ -72,6 +78,12 @@ namespace BLL.Repository
             {
                 //string result = "";
                 DataTable dtSetDept = _conn.ToDataTable(set.SetDiamond);
+                dtSetDept.Columns.Remove("DiamondDate");
+                dtSetDept.Columns.Remove("DiamondType");
+                dtSetDept.Columns.Remove("DiamondTypeValue");
+                dtSetDept.Columns.Remove("IssuedPiece");
+                dtSetDept.Columns.Remove("IssuedWeight");
+                dtSetDept.Columns.Remove("SettingId");
 
                 object stat = _conn.ExecuteProcedure("InsertUpdateSetDepartment", new SqlParameter("ProcType", "Update"),
                                                                                   new SqlParameter("SettingId", set.SettingId),
@@ -135,14 +147,14 @@ namespace BLL.Repository
             }
         }
 
-        public SingleReturnResult<SettingDepartmentDto> GetSettingJobWithId(int Id)
+        public async Task<SingleReturnResult<SettingDepartmentDto>> GetSettingJobWithId(int Id)
         {
             
             SingleReturnResult<SettingDepartmentDto> set = new SingleReturnResult<SettingDepartmentDto>();
             List<SettingDepartmentDto> tempset = new List<SettingDepartmentDto>();
             try
             {
-                DataSet dsSetting = _conn.ExecuteProcedureForDataSet("GetSetting",new SqlParameter("SettingId",Id));
+                DataSet dsSetting = await _conn.ExecuteProcedureForDataSet("GetSetting",new SqlParameter("SettingId",Id));
                 tempset = _conn.ConvertDataTable<SettingDepartmentDto>(dsSetting.Tables[0]);
                 if (dsSetting.Tables[1].Rows.Count > 0)
                 {
@@ -179,6 +191,32 @@ namespace BLL.Repository
                 set.Flag = ApplicationConstants.successFlag;
                 set.message = "Data Fetched successfully";
                 return set;
+            }
+            catch (Exception ex)
+            {
+                set.Flag = ApplicationConstants.failureFlag;
+                set.message = ex.ToString();
+                return set;
+            }
+        }
+
+        public async Task<ListReturnResult<DiamondDetailDto>> GetStoneForFitter(int Id)
+        {
+            ListReturnResult<DiamondDetailDto> set = new ListReturnResult<DiamondDetailDto>();
+            try
+            {
+                string SqlQuery = "GetStoneForFitter";
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    set.result = connection.Query<DiamondDetailDto>(SqlQuery,new {JobId = Id }, commandType: CommandType.StoredProcedure).AsList();
+
+                }
+                set.Flag = ApplicationConstants.successFlag;
+                set.message = "Data Fetched Successfully";
+                return set;
+
+
             }
             catch (Exception ex)
             {

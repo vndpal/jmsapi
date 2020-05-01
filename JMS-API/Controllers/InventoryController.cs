@@ -69,5 +69,14 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("GetInventoryReport")]
+        public async Task<IActionResult> GetInventoryReport(int companyId , string fromDate , string  toDate)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<InventoryReportDto> result = await _inventory.GetInventoryReport(companyId,fromDate,toDate);
+            response = Ok(result);
+            return response;
+        }
     }
 }
