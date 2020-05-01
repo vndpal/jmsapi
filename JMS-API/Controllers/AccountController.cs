@@ -36,14 +36,13 @@ namespace JMS_API.Controllers
         public async Task<IActionResult> Login(LoginDto login)
         {
             IActionResult Response = Unauthorized();
-
             SingleReturnResult<ResponseDto> loginDetails = await _repo.Login(login);
             Response = Ok(loginDetails);
-
             return Response;
         }
 
         [HttpGet]
+<<<<<<< HEAD
         [Route("GetMenuByRoleId")]
         public async Task<IActionResult> GetMenuByRoleId(int roleId)
         {
@@ -53,6 +52,25 @@ namespace JMS_API.Controllers
             Response = Ok(menus);
 
             return Response;
+=======
+        [Route("GetUsers")]
+        public async Task<IActionResult> GetUsers()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<UserMasterModel> users = await _repo.GetUsers();
+            response = Ok(users);
+            return response;
+        }
+       
+        [HttpGet]
+        [Route("GetUserById")]
+        public async Task<IActionResult> GetUserById(long id)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<UserMasterModel> user = await _repo.GetUserById(id);
+            response = Ok(user);
+            return response;
+>>>>>>> 3f6f6077ca6af867fc8b9606b69e967a6cffd075
         }
     }
 }
