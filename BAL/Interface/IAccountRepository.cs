@@ -10,5 +10,6 @@ namespace BLL.Interface
     {
         Task<SingleReturnResult<string>> Register(UserMasterModel userDetails);
         Task<SingleReturnResult<ResponseDto>> Login(LoginDto loginDetails);
+        Task<ListReturnResult<MenuListDto>> GetMenuByRoleId(int roleId);
     }
 }

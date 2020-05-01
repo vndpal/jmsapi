@@ -42,5 +42,17 @@ namespace JMS_API.Controllers
 
             return Response;
         }
+
+        [HttpGet]
+        [Route("GetMenuByRoleId")]
+        public async Task<IActionResult> GetMenuByRoleId(int roleId)
+        {
+            IActionResult Response = Unauthorized();
+
+            ListReturnResult<MenuListDto> menus = await _repo.GetMenuByRoleId(roleId);
+            Response = Ok(menus);
+
+            return Response;
+        }
     }
 }

@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Repository
 {
@@ -173,6 +174,54 @@ namespace BLL.Repository
                 result.Flag = ApplicationConstants.failureFlag;
                 result.message = ex.ToString();
                 return result;
+            }
+        }
+
+        public async Task<ListReturnResult<MenuListDto>> GetMenuByRoleId(int roleId)
+        {
+            ListReturnResult<MenuListDto> menus = new ListReturnResult<MenuListDto>();
+            try
+            {
+                List<MenuDto> allMenus = new List<MenuDto>();
+                string SqlQuery = "GetMenuByRoleId";
+                var values = new { RoleId = roleId };
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    allMenus = connection.Query<MenuDto>(SqlQuery,values, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                List<MenuListDto> menuList = new List<MenuListDto>();
+                var MainMenus = allMenus.Where(x => x.LevelFlag == 1).Select(x => new MenuListDto
+                {
+                    hierarchy = x.hierarchy,
+                    LevelFlag = x.LevelFlag,
+                    menu = x.menu,
+                    menuId = x.menuId,
+                    subMenuId = x.subMenuId,
+                    subMens = new List<MenuDto>()
+                }).ToList();
+
+                menuList.AddRange(MainMenus);
+
+                var subMenus = allMenus.Where(x => x.LevelFlag == 2).ToList();
+
+                foreach(var subMenu in subMenus)
+                {
+                    menuList.Where(x => x.menuId == subMenu.subMenuId).FirstOrDefault().subMens.Add(subMenu);
+                }
+
+                menus.Flag = ApplicationConstants.successFlag;
+                menus.message = "Menus fetched successfully";
+                menus.result = menuList;
+
+                return menus;
+            }
+            catch(Exception ex)
+            {
+                menus.Flag = ApplicationConstants.failureFlag;
+                menus.message = ex.ToString();
+                return menus;
             }
         }
 
