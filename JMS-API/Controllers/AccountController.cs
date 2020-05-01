@@ -42,7 +42,6 @@ namespace JMS_API.Controllers
         }
 
         [HttpGet]
-<<<<<<< HEAD
         [Route("GetMenuByRoleId")]
         public async Task<IActionResult> GetMenuByRoleId(int roleId)
         {
@@ -52,7 +51,8 @@ namespace JMS_API.Controllers
             Response = Ok(menus);
 
             return Response;
-=======
+         }
+
         [Route("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
@@ -70,7 +70,6 @@ namespace JMS_API.Controllers
             SingleReturnResult<UserMasterModel> user = await _repo.GetUserById(id);
             response = Ok(user);
             return response;
->>>>>>> 3f6f6077ca6af867fc8b9606b69e967a6cffd075
         }
     }
 }
