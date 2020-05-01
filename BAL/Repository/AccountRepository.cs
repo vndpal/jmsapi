@@ -130,13 +130,16 @@ namespace BLL.Repository
             try
             {
                 byte[] passwordHash, passwordSalt;
-
-                //Creating PasswordHash and PasswordSalt for password.
-                CreatePasswordHash(userDetails.Password, out passwordHash, out passwordSalt);
-
-                userDetails.PasswordHash = passwordHash;
-                userDetails.PasswordSalt = passwordSalt;
-
+                // Check for need to hash password
+                if (userDetails.Id == 0)
+                {
+                    // Creating PasswordHash and PasswordSalt for password.
+                    // PasswordHash and PasswordSalt get update in this method 
+                    // out with passwoordHash and Salt will provid updated value.
+                    CreatePasswordHash(userDetails.Password, out passwordHash, out passwordSalt);
+                    userDetails.PasswordHash = passwordHash;
+                    userDetails.PasswordSalt = passwordSalt;
+                }
                 var state = _conn.ExecuteProcedure("sp_RegisterUser",
                    new SqlParameter("Id", userDetails.Id),
                    new SqlParameter("RoleId", userDetails.RoleId),
@@ -184,6 +187,60 @@ namespace BLL.Repository
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
 
+        }
+
+        public async Task<ListReturnResult<UserMasterModel>> GetUsers()
+        {
+            ListReturnResult<UserMasterModel> users = new ListReturnResult<UserMasterModel>();
+            try
+            {
+                // Store Porcedure name
+                string SqlQuery = "sp_GetUsers";
+                // Getting connection info
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    // Opening connection string
+                    await connection.OpenAsync();
+                    // Getting all users form table
+                    users.result = connection.Query<UserMasterModel>(SqlQuery).AsList();
+                }
+                users.Flag = ApplicationConstants.successFlag;
+                users.message = "Data Fetched successfully";
+                return users;
+            }
+            catch (Exception ex)
+            {
+                users.Flag = ApplicationConstants.failureFlag;
+                users.message = ex.ToString();
+                return users;
+            }
+        }
+
+        public async Task<SingleReturnResult<UserMasterModel>> GetUserById(long id)
+        {
+            SingleReturnResult<UserMasterModel> user = new SingleReturnResult<UserMasterModel>();
+            try
+            {
+                // Store Procedure name
+                string SqlQuery = "sp_GetUserById";
+                // Getting connection string info 
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    // Opening connection string
+                    await connection.OpenAsync();
+                    // Getting user info by id
+                    user.result = await connection.QueryFirstOrDefaultAsync<UserMasterModel>(SqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure);
+                }
+                user.Flag = ApplicationConstants.successFlag;
+                user.message = "Data Fetched Successfully!";
+                return user;
+            }
+            catch (Exception ex)
+            {
+                user.Flag = ApplicationConstants.failureFlag;
+                user.message = ex.ToString();
+                return user;
+            }
         }
     }
 }

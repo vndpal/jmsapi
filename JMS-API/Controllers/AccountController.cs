@@ -36,11 +36,29 @@ namespace JMS_API.Controllers
         public async Task<IActionResult> Login(LoginDto login)
         {
             IActionResult Response = Unauthorized();
-
             SingleReturnResult<ResponseDto> loginDetails = await _repo.Login(login);
             Response = Ok(loginDetails);
-
             return Response;
+        }
+
+        [HttpGet]
+        [Route("GetUsers")]
+        public async Task<IActionResult> GetUsers()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<UserMasterModel> users = await _repo.GetUsers();
+            response = Ok(users);
+            return response;
+        }
+       
+        [HttpGet]
+        [Route("GetUserById")]
+        public async Task<IActionResult> GetUserById(long id)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<UserMasterModel> user = await _repo.GetUserById(id);
+            response = Ok(user);
+            return response;
         }
     }
 }
