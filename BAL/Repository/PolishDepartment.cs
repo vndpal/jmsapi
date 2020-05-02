@@ -174,6 +174,39 @@ namespace BLL.Repository
             }
         }
 
+        public async Task<ListReturnResult<PolishReportDto>> GetPolishReport(int jobId, int employeeId, string fromDate, string toDate, int status)
+        {
+            ListReturnResult<PolishReportDto> polish = new ListReturnResult<PolishReportDto>();
+            try
+            {
+                string SqlQuery = "GetPolishReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    polish.result = connection.Query<PolishReportDto>(SqlQuery, new { JobId = jobId, EmployeeId = employeeId, FromDate = fromDate, ToDate = toDate, Status = status }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                if (polish.result != null)
+                {
+                    polish.Flag = ApplicationConstants.successFlag;
+                    polish.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    polish.Flag = ApplicationConstants.failureFlag;
+                    polish.message = "No Records found !";
+                }
+                return polish;
+            }
+            catch (Exception ex)
+            {
+                polish.Flag = ApplicationConstants.failureFlag;
+                polish.message = ex.ToString();
+                return polish;
+            }
+        }
+
     }
          
 }

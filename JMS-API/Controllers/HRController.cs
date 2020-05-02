@@ -52,10 +52,10 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetHRReport")]
-        public async Task<IActionResult> GetHRReport(int jobId, string fromDate, string toDate)
+        public async Task<IActionResult> GetHRReport(int jobId)
         {
             IActionResult response = Unauthorized();
-            ListReturnResult<HRReportDto> result = await _hr.GetHRReport(jobId, fromDate, toDate);
+            ListReturnResult<HRReportDto> result = await _hr.GetHRReport(jobId);
             response = Ok(result);
             return response;
         }

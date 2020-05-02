@@ -107,7 +107,7 @@ namespace BLL.Repository
             }
         }
 
-        public async Task<ListReturnResult<HRReportDto>> GetHRReport(int jobId, string fromDate, string toDate)
+        public async Task<ListReturnResult<HRReportDto>> GetHRReport(int jobId)
         {
             ListReturnResult<HRReportDto> hr = new ListReturnResult<HRReportDto>();
             try
@@ -117,7 +117,7 @@ namespace BLL.Repository
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
-                    hr.result = connection.Query<HRReportDto>(SqlQuery, new { JobId = jobId, FromDate = fromDate, ToDate = toDate }, commandType: CommandType.StoredProcedure).AsList();
+                    hr.result = connection.Query<HRReportDto>(SqlQuery, new { JobId = jobId }, commandType: CommandType.StoredProcedure).AsList();
                 }
 
                 if (hr.result != null)

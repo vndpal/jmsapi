@@ -21,4 +21,18 @@ namespace DTO.DTOModels
         public int Status { get; set; }
         public string StatusValue { get; set; }
     }
+
+    public class PolishReportDto
+    {
+        public string JobNo { get; set; }
+        public string CompanyName { get; set; }
+        public string EmployeeName { get; set; }
+        public DateTime? IssuedDate { get; set; }
+        public DateTime? ReceivedDate { get; set; }
+        public string PolishType { get; set; }
+        public decimal? IssuedWeight { get; set; }
+        public decimal? ReceivedWeight { get; set; }
+        public decimal? WeightLoss { get; set; }
+        public string Status { get; set; }
+    }
 }

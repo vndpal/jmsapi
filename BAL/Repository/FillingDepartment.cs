@@ -174,5 +174,38 @@ namespace BLL.Repository
                 return filling;
             }
         }
+
+        public async Task<ListReturnResult<FillingReportDto>> GetFillingReport(int jobId ,int employeeId ,string fromDate ,string toDate , int status)
+        {
+            ListReturnResult<FillingReportDto> filling = new ListReturnResult<FillingReportDto>();
+            try
+            {
+                string SqlQuery = "GetFillingReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    filling.result = connection.Query<FillingReportDto>(SqlQuery, new { JobId = jobId,EmployeeId = employeeId,FromDate = fromDate,ToDate=toDate,Status= status }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                if (filling.result != null)
+                {
+                    filling.Flag = ApplicationConstants.successFlag;
+                    filling.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    filling.Flag = ApplicationConstants.failureFlag;
+                    filling.message = "No Records found !";
+                }
+                return filling;
+            }
+            catch (Exception ex)
+            {
+                filling.Flag = ApplicationConstants.failureFlag;
+                filling.message = ex.ToString();
+                return filling;
+            }
+        }
     }
 }
