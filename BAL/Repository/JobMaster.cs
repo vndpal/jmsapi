@@ -33,6 +33,7 @@ namespace BLL.Repository
                 DataTable dtJob = _conn.ToDataTable(job.diamondDetail);
                 dtJob.Columns.Remove("DiaId");
                 dtJob.Columns.Remove("JobId");
+                dtJob.Columns.Remove("DiamondTypeValue");
                 
                 string SqlQuery = "SELECT TOP 1 * FROM JobMaster WHERE CompanyId =" + job.CompanyId + " ORDER BY JobNo DESC";	
 	                using (var connection = new SqlConnection(_conn.strConnectionString()))	

@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Repository
 {
@@ -130,13 +131,16 @@ namespace BLL.Repository
             try
             {
                 byte[] passwordHash, passwordSalt;
-
-                //Creating PasswordHash and PasswordSalt for password.
-                CreatePasswordHash(userDetails.Password, out passwordHash, out passwordSalt);
-
-                userDetails.PasswordHash = passwordHash;
-                userDetails.PasswordSalt = passwordSalt;
-
+                // Check for need to hash password
+                if (userDetails.Id == 0)
+                {
+                    // Creating PasswordHash and PasswordSalt for password.
+                    // PasswordHash and PasswordSalt get update in this method 
+                    // out with passwoordHash and Salt will provid updated value.
+                    CreatePasswordHash(userDetails.Password, out passwordHash, out passwordSalt);
+                    userDetails.PasswordHash = passwordHash;
+                    userDetails.PasswordSalt = passwordSalt;
+                }
                 var state = _conn.ExecuteProcedure("sp_RegisterUser",
                    new SqlParameter("Id", userDetails.Id),
                    new SqlParameter("RoleId", userDetails.RoleId),
@@ -176,6 +180,54 @@ namespace BLL.Repository
             }
         }
 
+        public async Task<ListReturnResult<MenuListDto>> GetMenuByRoleId(int roleId)
+        {
+            ListReturnResult<MenuListDto> menus = new ListReturnResult<MenuListDto>();
+            try
+            {
+                List<MenuDto> allMenus = new List<MenuDto>();
+                string SqlQuery = "GetMenuByRoleId";
+                var values = new { RoleId = roleId };
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    allMenus = connection.Query<MenuDto>(SqlQuery,values, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                List<MenuListDto> menuList = new List<MenuListDto>();
+                var MainMenus = allMenus.Where(x => x.LevelFlag == 1).Select(x => new MenuListDto
+                {
+                    hierarchy = x.hierarchy,
+                    LevelFlag = x.LevelFlag,
+                    menu = x.menu,
+                    menuId = x.menuId,
+                    subMenuId = x.subMenuId,
+                    subMens = new List<MenuDto>()
+                }).ToList();
+
+                menuList.AddRange(MainMenus);
+
+                var subMenus = allMenus.Where(x => x.LevelFlag == 2).ToList();
+
+                foreach(var subMenu in subMenus)
+                {
+                    menuList.Where(x => x.menuId == subMenu.subMenuId).FirstOrDefault().subMens.Add(subMenu);
+                }
+
+                menus.Flag = ApplicationConstants.successFlag;
+                menus.message = "Menus fetched successfully";
+                menus.result = menuList;
+
+                return menus;
+            }
+            catch(Exception ex)
+            {
+                menus.Flag = ApplicationConstants.failureFlag;
+                menus.message = ex.ToString();
+                return menus;
+            }
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
@@ -184,6 +236,60 @@ namespace BLL.Repository
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
 
+        }
+
+        public async Task<ListReturnResult<UserMasterModel>> GetUsers()
+        {
+            ListReturnResult<UserMasterModel> users = new ListReturnResult<UserMasterModel>();
+            try
+            {
+                // Store Porcedure name
+                string SqlQuery = "sp_GetUsers";
+                // Getting connection info
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    // Opening connection string
+                    await connection.OpenAsync();
+                    // Getting all users form table
+                    users.result = connection.Query<UserMasterModel>(SqlQuery).AsList();
+                }
+                users.Flag = ApplicationConstants.successFlag;
+                users.message = "Data Fetched successfully";
+                return users;
+            }
+            catch (Exception ex)
+            {
+                users.Flag = ApplicationConstants.failureFlag;
+                users.message = ex.ToString();
+                return users;
+            }
+        }
+
+        public async Task<SingleReturnResult<UserMasterModel>> GetUserById(long id)
+        {
+            SingleReturnResult<UserMasterModel> user = new SingleReturnResult<UserMasterModel>();
+            try
+            {
+                // Store Procedure name
+                string SqlQuery = "sp_GetUserById";
+                // Getting connection string info 
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    // Opening connection string
+                    await connection.OpenAsync();
+                    // Getting user info by id
+                    user.result = await connection.QueryFirstOrDefaultAsync<UserMasterModel>(SqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure);
+                }
+                user.Flag = ApplicationConstants.successFlag;
+                user.message = "Data Fetched Successfully!";
+                return user;
+            }
+            catch (Exception ex)
+            {
+                user.Flag = ApplicationConstants.failureFlag;
+                user.message = ex.ToString();
+                return user;
+            }
         }
     }
 }
