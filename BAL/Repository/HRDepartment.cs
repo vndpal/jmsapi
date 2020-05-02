@@ -106,5 +106,38 @@ namespace BLL.Repository
                 return hrDept;
             }
         }
+
+        public async Task<ListReturnResult<HRReportDto>> GetHRReport(int jobId, string fromDate, string toDate)
+        {
+            ListReturnResult<HRReportDto> hr = new ListReturnResult<HRReportDto>();
+            try
+            {
+                string SqlQuery = "GetHRReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    hr.result = connection.Query<HRReportDto>(SqlQuery, new { JobId = jobId, FromDate = fromDate, ToDate = toDate }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                if (hr.result != null)
+                {
+                    hr.Flag = ApplicationConstants.successFlag;
+                    hr.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    hr.Flag = ApplicationConstants.failureFlag;
+                    hr.message = "No Records found !";
+                }
+                return hr;
+            }
+            catch (Exception ex)
+            {
+                hr.Flag = ApplicationConstants.failureFlag;
+                hr.message = ex.ToString();
+                return hr;
+            }
+        }
     }
 }

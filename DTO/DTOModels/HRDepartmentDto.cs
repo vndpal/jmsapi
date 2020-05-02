@@ -17,4 +17,14 @@ namespace DTO.DTOModels
         public decimal IssuedWeight { get; set; }
         public string Remark { get; set; }
     }
+
+    public class HRReportDto
+    {
+        public string JobNo { get; set; }
+        public string CompanyName { get; set; }
+        public string Department { get; set; }
+        public string EmployeeName { get; set; }
+        public decimal IssuedWeight { get; set; }
+        public DateTime? IssuedDate { get; set; }
+    }
 }
