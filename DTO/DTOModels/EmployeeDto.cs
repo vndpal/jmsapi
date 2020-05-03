@@ -13,6 +13,8 @@ namespace DTO.DTOModels
 
         public int DepartmentTypeId { get; set; }
 
+        public string Department { get; set; }
+
         public int EmployeeTypeId { get; set; }
 
         public string FirstName { get; set; }

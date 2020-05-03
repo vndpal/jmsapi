@@ -164,5 +164,45 @@ namespace BLL.Repository
                 return stock;
             }
         }
+
+        public async Task<SingleReturnResult<decimal>> GetBalancedWeight()
+        {
+            SingleReturnResult<decimal> totalweight = new SingleReturnResult<decimal>();
+            try
+            {
+                decimal creditedWeight = 0;
+                decimal debitedWeight = 0;
+                string SqlQuery = "SELECT ISNULL(SUM(MetalWeight),0) MetailWeight FROM Inventory";
+                string SqlQuery2 = "SELECT ISNULL(SUM(StockWeight),0) StockWeight FROM Stock";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    creditedWeight = await connection.QueryFirstOrDefaultAsync<decimal>(SqlQuery);
+                    debitedWeight = await connection.QueryFirstOrDefaultAsync<decimal>(SqlQuery2);
+
+                }
+
+                totalweight.result = (creditedWeight - debitedWeight);
+
+                if (totalweight.result > 0)
+                {
+                    totalweight.Flag = ApplicationConstants.successFlag;
+                    totalweight.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    totalweight.Flag = ApplicationConstants.failureFlag;
+                    totalweight.message = "No Records found !";
+                }
+                return totalweight;
+            }
+            catch (Exception ex)
+            {
+                totalweight.Flag = ApplicationConstants.failureFlag;
+                totalweight.message = ex.ToString();
+                return totalweight;
+            }
+        }
     }
 }
