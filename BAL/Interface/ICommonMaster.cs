@@ -11,5 +11,6 @@ namespace BLL.Interface
         Task<ListReturnResult<CommonMasterDto>> getCommonDetailsAsync(string mstGroup);
         Task<ListReturnResult<JobMasterDto>> getJobMaster();
         Task<ListReturnResult<TrackJobDto>> TrackJob(string department, int jobId);
+        Task<ListReturnResult<EmployeeDto>> GetEmployeeFromDepartment(int departmentId);
     }
 }
