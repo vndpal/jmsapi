@@ -105,7 +105,7 @@ namespace BLL.Repository
             ListReturnResult<StockDto> stock = new ListReturnResult<StockDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM Stock";
+                string SqlQuery = "GetStock";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {

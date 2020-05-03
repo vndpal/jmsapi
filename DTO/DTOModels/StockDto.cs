@@ -8,9 +8,12 @@ namespace DTO.DTOModels
     {
         public int StockId { get; set; }
         public int JobId { get; set; }
+        public int JobNo { get; set; }
         public DateTime StockDate { get; set; }
         public decimal StockWeight { get; set; }
         public int Hallmark { get; set; }
+        public string HallmarkValue { get; set; }
+        public string CompanyName { get; set; }
         public decimal Purity { get; set; }
         public string Remark { get; set; }
         public int ProcessStatus { get; set; }
