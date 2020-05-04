@@ -12,6 +12,7 @@ namespace DTO.DTOModels
         public DateTime? IssuedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
         public DateTime? DueDate { get; set; }
+        public int EmployeeId { get; set; }
         public decimal? IssuedWeight { get; set; }
         public decimal? RawGhatWeight { get; set; }
         public decimal? PercentageLoss { get; set; }

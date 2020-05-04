@@ -27,8 +27,8 @@ namespace BLL.Repository
                 var procResult = _conn.ExecuteProcedure("InsertUpdatePolish", new SqlParameter("ProcType", "INSERT")
                                                                               , new SqlParameter("PolishId", 0)
                                                                               , new SqlParameter("JobId", polish.JobId)
-                                                                      
-        , new SqlParameter("IssuedDate", polish.IssuedDate)
+                                                                              , new SqlParameter("EmployeeId", polish.EmployeeId)
+                                                                             , new SqlParameter("IssuedDate", polish.IssuedDate)
                                                                               , new SqlParameter("ReceivedDate", polish.ReceivedDate)
                                                                               , new SqlParameter("PolishType", polish.PolishType)
                                                                               , new SqlParameter("IssuedWeight ", polish.IssuedWeight)
@@ -68,6 +68,7 @@ namespace BLL.Repository
                 var procResult = _conn.ExecuteProcedure("InsertUpdatePolish", new SqlParameter("ProcType", "UPDATE")
                                                                               , new SqlParameter("PolishId", polish.PolishId)
                                                                               , new SqlParameter("JobId", polish.JobId)
+                                                                              , new SqlParameter("EmployeeId", polish.EmployeeId)
                                                                               , new SqlParameter("IssuedDate", polish.IssuedDate)
                                                                               , new SqlParameter("ReceivedDate", polish.ReceivedDate)
                                                                               , new SqlParameter("PolishType", polish.PolishType)
