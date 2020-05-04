@@ -12,5 +12,6 @@ namespace BLL.Interface
         Task<SingleReturnResult<StockDto>> UpdateStock(StockDto inventory);
         Task<ListReturnResult<StockDto>> GetStockList();
         Task<SingleReturnResult<StockDto>> GetStockById(int id);
+        Task<SingleReturnResult<decimal>> GetBalancedWeight();
     }
 }

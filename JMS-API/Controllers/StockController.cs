@@ -58,5 +58,16 @@ namespace API.Controllers
             response = Ok(result);
             return response;
         }
+
+
+        [HttpGet]
+        [Route("GetBalancedWeight")]
+        public async Task<IActionResult> GetBalancedWeight()
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<decimal> result = await _stock.GetBalancedWeight();
+            response = Ok(result);
+            return response;
+        }
     }
 }

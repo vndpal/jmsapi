@@ -13,5 +13,6 @@ namespace BLL.Interface
         Task<ListReturnResult<PolishDepartmentDto>> GetPolishJobs();
         Task<SingleReturnResult<PolishDepartmentDto>> GetPolishJobWithId(int Id);
         Task<ListReturnResult<AssignedJobDTO>> GetPolishAssignedJob();
+        Task<ListReturnResult<PolishReportDto>> GetPolishReport(int jobId, int employeeId, string fromDate, string toDate, int status);
     }
 }

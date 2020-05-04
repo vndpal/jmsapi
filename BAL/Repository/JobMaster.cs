@@ -33,6 +33,7 @@ namespace BLL.Repository
                 DataTable dtJob = _conn.ToDataTable(job.diamondDetail);
                 dtJob.Columns.Remove("DiaId");
                 dtJob.Columns.Remove("JobId");
+                dtJob.Columns.Remove("DiamondTypeValue");
                 
                 string SqlQuery = "SELECT TOP 1 * FROM JobMaster WHERE CompanyId =" + job.CompanyId + " ORDER BY JobNo DESC";	
 	                using (var connection = new SqlConnection(_conn.strConnectionString()))	
@@ -129,12 +130,12 @@ namespace BLL.Repository
             ListReturnResult<JobMasterDto> job = new ListReturnResult<JobMasterDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM JobMaster";
+                string SqlQuery = "GetJobById";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
                     await connection.OpenAsync();
-                    job.result = connection.Query<JobMasterDto>(SqlQuery).AsList();
+                    job.result = connection.Query<JobMasterDto>(SqlQuery , new { JobId = 0},commandType:CommandType.StoredProcedure).AsList();
                 }
                 job.Flag = ApplicationConstants.successFlag;
                 job.message = "Data Fetched successfully";

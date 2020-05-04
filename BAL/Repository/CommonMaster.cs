@@ -89,5 +89,29 @@ namespace BLL.Repository
             }
             return trackJob;
         }
+
+        public async Task<ListReturnResult<EmployeeDto>> GetEmployeeFromDepartment(int departmentId)
+        {
+            ListReturnResult<EmployeeDto> emp = new ListReturnResult<EmployeeDto>();
+            try
+            {
+                string sqlQuery = "GetEmployeeForDepartment";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    emp.result = connection.Query<EmployeeDto>(sqlQuery, new { DepartmentId = departmentId }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                emp.Flag = ApplicationConstants.successFlag;
+                emp.message = "Data fetched Successfully !";
+            }
+            catch (Exception ex)
+            {
+                emp.Flag = ApplicationConstants.failureFlag;
+                emp.message = "Some error has occured while fetching the data" + ex.ToString();
+            }
+            return emp;
+        }
     }
 }

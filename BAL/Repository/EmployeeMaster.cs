@@ -109,11 +109,11 @@ namespace BLL.Repository
             ListReturnResult<EmployeeDto> emp = new ListReturnResult<EmployeeDto>();
             try
             {
-                string SqlQuery = "SELECT * FROM Employees";
+                string SqlQuery = "GetEmployee";
 
                 using (var connection = new SqlConnection(_conn.strConnectionString()))
                 {
- await connection.OpenAsync();
+                    await connection.OpenAsync();
                     emp.result = connection.Query<EmployeeDto>(SqlQuery).AsList();
                 }
                 emp.Flag = ApplicationConstants.successFlag;

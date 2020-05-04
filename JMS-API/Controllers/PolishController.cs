@@ -68,5 +68,15 @@ namespace API.Controllers
             response = Ok(polishDetails);
             return response;
         }
+
+        [HttpGet]
+        [Route("GetPolishReport")]
+        public async Task<IActionResult> GetPolishReport(int jobId, int employeeId, string fromDate, string toDate, int status)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<PolishReportDto> result = await _polish.GetPolishReport(jobId, employeeId, fromDate, toDate, status);
+            response = Ok(result);
+            return response;
+        }
     }
 }

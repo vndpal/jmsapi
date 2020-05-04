@@ -69,5 +69,15 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("GetFillingReport")]
+        public async Task<IActionResult> GetFillingReport(int jobId ,int employeeId ,string fromDate ,string toDate , int status)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<FillingReportDto> result = await _filling.GetFillingReport(jobId , employeeId ,fromDate , toDate ,status);
+            response = Ok(result);
+            return response;
+        }
+
     }
 }

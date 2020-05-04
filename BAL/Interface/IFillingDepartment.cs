@@ -13,5 +13,6 @@ namespace BLL.Interface
         Task<ListReturnResult<FillingDepartmentDto>> GetFillingJobs();
         Task<SingleReturnResult<FillingDepartmentDto>> GetFillingJobWithId(int Id);
         Task<ListReturnResult<AssignedJobDTO>> GetFillingAssignedJob();
+        Task<ListReturnResult<FillingReportDto>> GetFillingReport(int jobId, int employeeId, string fromDate, string toDate, int status);
     }
 }

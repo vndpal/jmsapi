@@ -27,8 +27,8 @@ namespace BLL.Repository
                 var procResult = _conn.ExecuteProcedure("InsertUpdatePolish", new SqlParameter("ProcType", "INSERT")
                                                                               , new SqlParameter("PolishId", 0)
                                                                               , new SqlParameter("JobId", polish.JobId)
-                                                                      
-        , new SqlParameter("IssuedDate", polish.IssuedDate)
+                                                                              , new SqlParameter("EmployeeId", polish.EmployeeId)
+                                                                             , new SqlParameter("IssuedDate", polish.IssuedDate)
                                                                               , new SqlParameter("ReceivedDate", polish.ReceivedDate)
                                                                               , new SqlParameter("PolishType", polish.PolishType)
                                                                               , new SqlParameter("IssuedWeight ", polish.IssuedWeight)
@@ -68,6 +68,7 @@ namespace BLL.Repository
                 var procResult = _conn.ExecuteProcedure("InsertUpdatePolish", new SqlParameter("ProcType", "UPDATE")
                                                                               , new SqlParameter("PolishId", polish.PolishId)
                                                                               , new SqlParameter("JobId", polish.JobId)
+                                                                              , new SqlParameter("EmployeeId", polish.EmployeeId)
                                                                               , new SqlParameter("IssuedDate", polish.IssuedDate)
                                                                               , new SqlParameter("ReceivedDate", polish.ReceivedDate)
                                                                               , new SqlParameter("PolishType", polish.PolishType)
@@ -164,6 +165,39 @@ namespace BLL.Repository
                 }
                 polish.Flag = ApplicationConstants.successFlag;
                 polish.message = "Data Fetched successfully";
+                return polish;
+            }
+            catch (Exception ex)
+            {
+                polish.Flag = ApplicationConstants.failureFlag;
+                polish.message = ex.ToString();
+                return polish;
+            }
+        }
+
+        public async Task<ListReturnResult<PolishReportDto>> GetPolishReport(int jobId, int employeeId, string fromDate, string toDate, int status)
+        {
+            ListReturnResult<PolishReportDto> polish = new ListReturnResult<PolishReportDto>();
+            try
+            {
+                string SqlQuery = "GetPolishReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    polish.result = connection.Query<PolishReportDto>(SqlQuery, new { JobId = jobId, EmployeeId = employeeId, FromDate = fromDate, ToDate = toDate, Status = status }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                if (polish.result != null)
+                {
+                    polish.Flag = ApplicationConstants.successFlag;
+                    polish.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    polish.Flag = ApplicationConstants.failureFlag;
+                    polish.message = "No Records found !";
+                }
                 return polish;
             }
             catch (Exception ex)

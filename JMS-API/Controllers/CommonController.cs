@@ -49,5 +49,15 @@ namespace API.Controllers
             response = Ok(trackJob);
             return response;
         }
+
+        [HttpGet]
+        [Route("getEmployeeForDepartment")]
+        public async Task<IActionResult> getEmployeeForDepartment(int departmentId)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<EmployeeDto> emp = await _common.GetEmployeeFromDepartment(departmentId);
+            response = Ok(emp);
+            return response;
+        }
     }
 }

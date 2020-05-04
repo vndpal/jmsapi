@@ -9,6 +9,8 @@ namespace DTO.DTOModels
         public int SettingId { get; set; }
         public int JobId { get; set; }
         public string JobNo { get; set; }
+        public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
         public DateTime? IssuedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
         public decimal IssuedWeight { get; set; }

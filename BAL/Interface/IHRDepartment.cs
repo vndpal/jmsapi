@@ -11,5 +11,6 @@ namespace BLL.Interface
         Task<SingleReturnResult<string>> AddHR(HRDepartmentDto hr);
         Task<ListReturnResult<AssignedJobDTO>> GetHRAssignedJob();
         Task<ListReturnResult<HRDepartmentDto>> GetHRDepartmentJobs();
+        Task<ListReturnResult<HRReportDto>> GetHRReport(int jobId);
     }
 }

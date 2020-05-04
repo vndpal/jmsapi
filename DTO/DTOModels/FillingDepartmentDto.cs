@@ -12,6 +12,7 @@ namespace DTO.DTOModels
         public DateTime? IssuedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
         public DateTime? DueDate { get; set; }
+        public int EmployeeId { get; set; }
         public decimal? IssuedWeight { get; set; }
         public decimal? RawGhatWeight { get; set; }
         public decimal? PercentageLoss { get; set; }
@@ -20,5 +21,22 @@ namespace DTO.DTOModels
         public string Remark { get; set; }
         public int Status { get; set; }
         public string StatusValue { get; set; }
+    }
+
+    public class FillingReportDto
+    {
+    
+        public string JobNo { get; set; }
+        public string CompanyName { get; set; }
+        public string EmployeeName { get; set; }
+        public DateTime? IssuedDate { get; set; }
+        public DateTime? ReceivedDate { get; set; }
+        public DateTime? DueDate { get; set; }
+        public decimal? IssuedWeight { get; set; }
+        public decimal? RawGhatWeight { get; set; }
+        public decimal? PercentageLoss { get; set; }
+        public decimal? Loss { get; set; }
+        public decimal? ExtraLoss { get; set; }
+        public string Status { get; set; }
     }
 }

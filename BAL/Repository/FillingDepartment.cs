@@ -32,6 +32,7 @@ namespace BLL.Repository
                                                                               , new SqlParameter("IssuedWeight ", filling.IssuedWeight)
                                                                               , new SqlParameter("RawGhatWeight", filling.RawGhatWeight)
                                                                               , new SqlParameter("PercentageLoss", filling.PercentageLoss)
+                                                                              , new SqlParameter("EmployeeId", filling.EmployeeId)
                                                                               , new SqlParameter("Loss", filling.Loss)
                                                                               , new SqlParameter("ExtraLoss", filling.ExtraLoss)
                                                                               , new SqlParameter("Status", filling.Status)
@@ -73,6 +74,7 @@ namespace BLL.Repository
                                                                               , new SqlParameter("IssuedWeight ", filling.IssuedWeight)
                                                                               , new SqlParameter("RawGhatWeight", filling.RawGhatWeight)
                                                                               , new SqlParameter("PercentageLoss", filling.PercentageLoss)
+                                                                              , new SqlParameter("EmployeeId", filling.EmployeeId)
                                                                               , new SqlParameter("Loss", filling.Loss)
                                                                               , new SqlParameter("ExtraLoss", filling.ExtraLoss)
                                                                               , new SqlParameter("Status", filling.Status)
@@ -165,6 +167,39 @@ namespace BLL.Repository
                 }
                 filling.Flag = ApplicationConstants.successFlag;
                 filling.message = "Data Fetched successfully";
+                return filling;
+            }
+            catch (Exception ex)
+            {
+                filling.Flag = ApplicationConstants.failureFlag;
+                filling.message = ex.ToString();
+                return filling;
+            }
+        }
+
+        public async Task<ListReturnResult<FillingReportDto>> GetFillingReport(int jobId ,int employeeId ,string fromDate ,string toDate , int status)
+        {
+            ListReturnResult<FillingReportDto> filling = new ListReturnResult<FillingReportDto>();
+            try
+            {
+                string SqlQuery = "GetFillingReport";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    filling.result = connection.Query<FillingReportDto>(SqlQuery, new { JobId = jobId,EmployeeId = employeeId,FromDate = fromDate,ToDate=toDate,Status= status }, commandType: CommandType.StoredProcedure).AsList();
+                }
+
+                if (filling.result != null)
+                {
+                    filling.Flag = ApplicationConstants.successFlag;
+                    filling.message = "Data Fetched Successfully!";
+                }
+                else
+                {
+                    filling.Flag = ApplicationConstants.failureFlag;
+                    filling.message = "No Records found !";
+                }
                 return filling;
             }
             catch (Exception ex)
