@@ -242,5 +242,39 @@ namespace BLL.Repository
                 return user;
             }
         }
+
+        public async Task<SingleReturnResult<int>> SetRoleMenuMapping(RoleMenuModel roleMenu)
+        {
+            SingleReturnResult<int> result = new SingleReturnResult<int>();
+            try
+            {
+                // Stored procedure name
+                string sqlQuery = "sp_InsertUpdateRoleMenuMapping";
+                // Storing list of data inot datatable
+                DataTable dtMenu = _conn.ToDataTable(roleMenu.MenuList);
+                // Getting connection string config
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    // Opening connection string
+                    await connection.OpenAsync();
+                    var param = new DynamicParameters();
+                    // Adding parameter
+                    param.Add("@RoleId", roleMenu.RoleId, DbType.Int32);
+                    // Making DBType as UDT 
+                    param.Add("@MenuList", dtMenu.AsTableValuedParameter("[dbo].[udt_MenuList]"));
+                    // Updating Roleid, MenuId and Status in mapping table
+                    result.result = await connection.QueryFirstOrDefaultAsync<int>(sqlQuery, param, commandType: CommandType.StoredProcedure);
+                }
+                result.Flag = ApplicationConstants.successFlag;
+                result.message = "Data Fetched Successfully!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Flag = ApplicationConstants.failureFlag;
+                result.message = ex.ToString();
+                return result;
+            }
+        }
     }
 }

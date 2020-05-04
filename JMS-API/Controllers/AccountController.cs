@@ -50,7 +50,7 @@ namespace JMS_API.Controllers
             response = Ok(users);
             return response;
         }
-       
+
         [HttpGet]
         [Route("GetUserById")]
         public async Task<IActionResult> GetUserById(long id)
@@ -58,6 +58,16 @@ namespace JMS_API.Controllers
             IActionResult response = Unauthorized();
             SingleReturnResult<UserMasterModel> user = await _repo.GetUserById(id);
             response = Ok(user);
+            return response;
+        }
+
+        [HttpPost]
+        [Route("SetRoleMenuMapping")]
+        public async Task<IActionResult> SetRoleMenuMapping(RoleMenuModel roleMenu)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<int> result = await _repo.SetRoleMenuMapping(roleMenu);
+            response = Ok(result);
             return response;
         }
     }
