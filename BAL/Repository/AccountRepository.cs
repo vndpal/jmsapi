@@ -325,5 +325,29 @@ namespace BLL.Repository
                 return result;
             }
         }
+
+        public async Task<ListReturnResult<CommonMasterDto>> getAllRoles()
+        {
+            ListReturnResult<CommonMasterDto> commonResult = new ListReturnResult<CommonMasterDto>();
+            try
+            {
+                string sqlQuery = "select Id,Code as MasterKey,RoleName as MasterValue from RoleMaster where status=1";
+
+                using (var connection = new SqlConnection(_conn.strConnectionString()))
+                {
+                    await connection.OpenAsync();
+                    commonResult.result = connection.Query<CommonMasterDto>(sqlQuery).AsList();
+                }
+
+                commonResult.Flag = ApplicationConstants.successFlag;
+                commonResult.message = "Data fetched Successfully from Role master !";
+            }
+            catch (Exception ex)
+            {
+                commonResult.Flag = ApplicationConstants.failureFlag;
+                commonResult.message = "Some error has occured while fetching the data" + ex.ToString();
+            }
+            return commonResult;
+        }
     }
 }

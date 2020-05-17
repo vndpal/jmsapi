@@ -14,5 +14,6 @@ namespace BLL.Interface
         Task<ListReturnResult<UserMasterModel>> GetUsers();
         Task<SingleReturnResult<UserMasterModel>> GetUserById(long id);
         Task<SingleReturnResult<int>> SetRoleMenuMapping(RoleMenuModel roleMenu);
+        Task<ListReturnResult<CommonMasterDto>> getAllRoles();
     }
 }

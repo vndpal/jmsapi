@@ -63,6 +63,16 @@ namespace JMS_API.Controllers
         }
 
         [HttpGet]
+        [Route("getAllRoles")]
+        public async Task<IActionResult> GetCommonDetails()
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<CommonMasterDto> commonDetail = await _repo.getAllRoles();
+            response = Ok(commonDetail);
+            return response;
+        }
+
+        [HttpGet]
         [Route("GetUserById")]
         public async Task<IActionResult> GetUserById(long id)
         {
