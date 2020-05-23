@@ -76,6 +76,8 @@ namespace JMS_API
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IStock, Stock>();
             services.AddScoped<ICommonMaster, CommonMaster>();
+            services.AddScoped<ITouchUp, TouchUp>();
+            services.AddScoped<IDeliveryScreen, DeliveryScreen>();
             services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
