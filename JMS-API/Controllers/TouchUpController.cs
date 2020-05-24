@@ -18,6 +18,16 @@ namespace API.Controllers
             _touch = touch;
         }
 
+        [HttpPost]
+        [Route("AddTouchUp")]
+        public async Task<IActionResult> AddTouchUp([FromBody]TouchUpDto touch)
+        {
+            IActionResult response = Unauthorized();
+            SingleReturnResult<string> newtouch = await _touch.AddTouchUp(touch);
+            response = Ok(newtouch);
+            return response;
+        }
+
         [HttpGet]
         [Route("JobForTouchUp")]
         public async Task<IActionResult> JobForTouchUp()
@@ -25,6 +35,16 @@ namespace API.Controllers
             IActionResult response = Unauthorized();
             ListReturnResult<AssignedJobDTO> setDetails = await _touch.GetTouchUpAssignedJob();
             response = Ok(setDetails);
+            return response;
+        }
+
+        [HttpGet]
+        [Route("StoneByJobIdForTouchUp")]
+        public async Task<IActionResult> GetStoneByJobIdForTouchUp(int id)
+        {
+            IActionResult response = Unauthorized();
+            ListReturnResult<DiamondDetailDto> setDetail = await _touch.GetStoneForTouchUp(id);
+            response = Ok(setDetail);
             return response;
         }
 
