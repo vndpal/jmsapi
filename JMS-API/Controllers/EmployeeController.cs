@@ -23,7 +23,7 @@ namespace JMS_API.Controllers
         }
 
         // public ICompanyMaster _Comp { get; }
-
+	//test
         //[HttpPost]
         //[Route("EmployeeRegister")]
         //public async Task<IActionResult> EmployeeRegister([FromBody]EmployeeDto empDetails)
